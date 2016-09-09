@@ -1,0 +1,2 @@
+# ObjeqtNote
+Ultimate File Editor
