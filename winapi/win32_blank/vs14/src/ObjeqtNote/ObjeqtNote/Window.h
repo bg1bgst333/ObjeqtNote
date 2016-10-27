@@ -33,5 +33,6 @@ class CWindow {
 		virtual LRESULT DynamicWindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);	// WindowProcから各ウィンドウオブジェクトごとに呼び出されるサブウィンドウプロシージャDynamicWindowProc
 		virtual int OnCreate(HWND hwnd, LPCREATESTRUCT lpCreateStruct) = 0;	// ウィンドウ作成時のハンドラOnCreate.(純粋仮想関数)
 		virtual void OnDestroy() = 0;	// ウィンドウ破棄時のハンドラOnDestroy.(純粋仮想関数)
+		virtual BOOL OnCommand(WPARAM wParam, LPARAM lParam) = 0;	// コマンド処理時のハンドラOnCommand.(純粋仮想関数)
 
 };
