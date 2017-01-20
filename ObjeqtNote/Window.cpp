@@ -233,6 +233,20 @@ LRESULT CWindow::DynamicWindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM l
 			// 既定の処理へ向かう.
 			break;	// 抜けてDefWindowProcに向かう.
 
+		// コマンドが処理された時.
+		case WM_COMMAND:
+
+			// WM_COMMANDブロック
+			{
+
+				// OnCommandに任せる.
+				return OnCommand(wParam, lParam) ? 0 : 1;	// wParamとlParamを渡して任せる.
+
+			}
+
+			// 既定の処理へ向かう.
+			break;	// 抜けてDefWindowProcに向かう.
+
 		// それ以外の時.
 		default:
 
@@ -259,5 +273,13 @@ void CWindow::OnDestroy(){
 
 	// メッセージループ終了.
 	PostQuitMessage(0);	// PostQuitMessageでメッセージループを抜けさせる.
+
+}
+
+// コマンド処理時のハンドラOnCommand.
+BOOL CWindow::OnCommand(WPARAM wParam, LPARAM lParam){
+
+	// とりあえずTRUEを返す.
+	return TRUE;	// TRUEを返す.
 
 }

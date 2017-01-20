@@ -5,7 +5,6 @@
 // 独自のヘッダ
 #include "StandardApplication.h"	// スタンダードアプリケーションクラス
 #include "MenuWindow.h"				// メニューウィンドウクラス
-#include "resource.h"				// リソース
 
 // コンストラクタCStandardApplication()
 CStandardApplication::CStandardApplication() : CBasicApplication() {
