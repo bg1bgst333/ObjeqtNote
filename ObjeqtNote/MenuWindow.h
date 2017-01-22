@@ -4,7 +4,6 @@
 // 独自のヘッダ
 #include "BasicWindow.h"	// ベーシックウィンドウクラス
 #include "MenuBar.h"		// メニューバークラス
-#include "resource.h"		// リソース
 
 // メニューウィンドウクラスCMenuWindow
 class CMenuWindow : public CBasicWindow {

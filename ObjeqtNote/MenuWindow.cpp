@@ -61,7 +61,20 @@ int CMenuWindow::OnCreate(HWND hwnd, LPCREATESTRUCT lpCreateStruct){
 // コマンド処理時のハンドラOnCommand.
 BOOL CMenuWindow::OnCommand(WPARAM wParam, LPARAM lParam){
 
-	// とりあえずTRUEを返す.
-	return TRUE;	// TRUEを返す.
+	// メニューコマンドだった場合.
+	if (HIWORD(wParam) == 0) {	// HIWORD(wParam)が0ならメニューが選択されたということ.
+
+		// メニューオブジェクトがあるかチェック.
+		if (m_pMenuBar != NULL) {	// m_pMenuBarがNULLでない場合.
+
+			// OnCommandMenuItemにコマンド処理を任せる.
+			return m_pMenuBar->OnCommandMenuItem(wParam, lParam);	// OnCommandMenuItemにwParam, lParamを渡してあとは任せ, 戻り値をそのまま返す.
+
+		}
+
+	}
+
+	// FALSEを返す.
+	return TRUE;
 
 }
