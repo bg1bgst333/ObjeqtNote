@@ -5,6 +5,7 @@
 // 独自のヘッダ
 #include "StandardApplication.h"	// スタンダードアプリケーションクラス
 #include "StandardWindow.h"			// スタンダードウィンドウクラス
+#include "UserControl.h"			// ユーザコントロールクラス
 
 // コンストラクタCStandardApplication()
 CStandardApplication::CStandardApplication() : CBasicApplication() {
@@ -19,6 +20,9 @@ BOOL CStandardApplication::InitInstance(HINSTANCE hInstance, LPTSTR lpCmdLine, i
 
 	// スタンダードウィンドウクラスの登録
 	CStandardWindow::RegisterClass(hInstance, IDR_MAINMENU);	// CStandardWindow::RegisterClassでメニューIDがIDR_MAINMENUなウィンドウクラス"StandardWindow"を登録.
+
+	// ユーザコントロールクラスの登録
+	CUserControl::RegisterClass(hInstance, _T("UserControl"));	// CUserControl::RegisterClassで独自のウィンドウクラス"UserControl"を登録.
 
 	// スタンダードウィンドウオブジェクトの生成
 	m_pMainWindow = new CStandardWindow();	// CStandardWindowオブジェクトを作成し, アドレスをm_pMainWindowに格納.
