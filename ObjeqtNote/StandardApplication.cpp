@@ -4,7 +4,7 @@
 // ヘッダのインクルード
 // 独自のヘッダ
 #include "StandardApplication.h"	// スタンダードアプリケーションクラス
-#include "MenuWindow.h"				// メニューウィンドウクラス
+#include "StandardWindow.h"			// スタンダードウィンドウクラス
 
 // コンストラクタCStandardApplication()
 CStandardApplication::CStandardApplication() : CBasicApplication() {
@@ -17,11 +17,11 @@ BOOL CStandardApplication::InitInstance(HINSTANCE hInstance, LPTSTR lpCmdLine, i
 	// 初期化
 	CBasicApplication::InitInstance(hInstance, lpCmdLine, nShowCmd);	// CBasicApplication::InitInstanceを呼ぶ.
 
-	// メニューウィンドウクラスの登録
-	CMenuWindow::RegisterClass(hInstance, IDR_MAINMENU);	// CMenuWindow::RegisterClassでメニューIDがIDR_MAINMENUなウィンドウクラス"MenuWindow"を登録.
+	// スタンダードウィンドウクラスの登録
+	CStandardWindow::RegisterClass(hInstance, IDR_MAINMENU);	// CStandardWindow::RegisterClassでメニューIDがIDR_MAINMENUなウィンドウクラス"StandardWindow"を登録.
 
-	// メニューウィンドウオブジェクトの生成
-	m_pMainWindow = new CMenuWindow();	// CMenuWindowオブジェクトを作成し, アドレスをm_pMainWindowに格納.
+	// スタンダードウィンドウオブジェクトの生成
+	m_pMainWindow = new CStandardWindow();	// CStandardWindowオブジェクトを作成し, アドレスをm_pMainWindowに格納.
 
 	// ウィンドウ作成
 	if (!m_pMainWindow->Create(_T("ObjeqtNote"), WS_OVERLAPPEDWINDOW, CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT, NULL, NULL, hInstance)) {	// m_pMainWindow->Createでの作成が失敗なら.

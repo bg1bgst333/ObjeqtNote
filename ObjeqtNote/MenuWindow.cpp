@@ -5,12 +5,19 @@
 // 独自のヘッダ
 #include "MenuWindow.h"	// メニューウィンドウクラス
 
+// ウィンドウクラス登録関数RegisterClass
+BOOL CMenuWindow::RegisterClass(HINSTANCE hInstance){
+
+	// ウィンドウクラスの登録
+	return CWindow::RegisterClass(hInstance, _T("MenuWindow"));	// CWindow::RegisterClassでウィンドウクラス"MenuWindow"を登録.
+
+}
+
 // ウィンドウクラス登録関数RegisterClass(メニュー指定)
 BOOL CMenuWindow::RegisterClass(HINSTANCE hInstance, UINT nID){
 
 	// ウィンドウクラスの登録
-	//return CWindow::RegisterClass(hInstance, _T("MenuWindow"), nID);	// CWindow::RegisterClass(メニュー指定)でウィンドウクラス"MenuWindow"を登録.
-	return CWindow::RegisterClass(hInstance, _T("MenuWindow"));	// CWindow::RegisterClassでウィンドウクラス"MenuWindow"を登録.
+	return CWindow::RegisterClass(hInstance, _T("MenuWindow"), nID);	// CWindow::RegisterClass(メニュー指定)でウィンドウクラス"MenuWindow"を登録.
 
 }
 
@@ -75,6 +82,6 @@ BOOL CMenuWindow::OnCommand(WPARAM wParam, LPARAM lParam){
 	}
 
 	// FALSEを返す.
-	return TRUE;
+	return FALSE;
 
 }
