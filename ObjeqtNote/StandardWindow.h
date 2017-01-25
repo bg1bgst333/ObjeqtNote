@@ -2,8 +2,9 @@
 #pragma once	// #pragma onceで二重インクルード防止.
 
 // 独自のヘッダ
-#include "MenuWindow.h"	// メニューウィンドウクラス
-#include "UserControl.h"			// ユーザコントロールクラス
+#include "MenuWindow.h"		// メニューウィンドウクラス
+#include "UserControl.h"	// ユーザコントロールクラス
+#include "CustomControl.h"	// カスタムコントロールクラス	
 
 // スタンダードウィンドウクラスCStandardWindow
 class CStandardWindow : public CMenuWindow {
@@ -12,7 +13,8 @@ class CStandardWindow : public CMenuWindow {
 	public:
 
 		// publicメンバ変数
-		CUserControl *m_pUserControl;	// CUserControl *型ユーザコントロールオブジェクトポインタm_pUserControl
+		CUserControl *m_pUserControl;		// CUserControl *型ユーザコントロールオブジェクトポインタm_pUserControl
+		CCustomControl *m_pCustomControl;	// CCustomControl *型カスタムコントロールオブジェクトポインタm_pCustomControl
 
 		// publicメンバ関数
 		// staticメンバ関数
