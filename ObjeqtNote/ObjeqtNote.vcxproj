@@ -150,6 +150,8 @@
     <ClCompile Include="BasicApplication.cpp" />
     <ClCompile Include="BasicWindow.cpp" />
     <ClCompile Include="CustomControl.cpp" />
+    <ClCompile Include="MainApplication.cpp" />
+    <ClCompile Include="MainWindow.cpp" />
     <ClCompile Include="MenuBar.cpp" />
     <ClCompile Include="MenuWindow.cpp" />
     <ClCompile Include="StandardApplication.cpp" />
@@ -163,6 +165,8 @@
     <ClInclude Include="BasicApplication.h" />
     <ClInclude Include="BasicWindow.h" />
     <ClInclude Include="CustomControl.h" />
+    <ClInclude Include="MainApplication.h" />
+    <ClInclude Include="MainWindow.h" />
     <ClInclude Include="MenuBar.h" />
     <ClInclude Include="MenuWindow.h" />
     <ClInclude Include="resource.h" />
