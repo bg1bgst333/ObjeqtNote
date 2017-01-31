@@ -3,6 +3,7 @@
 
 // 独自のヘッダ
 #include "MainWindow.h"		// メニューウィンドウクラス	
+#include "MainMenuBar.h"	// メインメニューバークラス
 
 // ウィンドウクラス登録関数RegisterClass(メニュー指定)
 BOOL CMainWindow::RegisterClass(HINSTANCE hInstance, UINT nID) {
@@ -47,8 +48,8 @@ BOOL CMainWindow::Create(LPCTSTR lpctszWindowName, DWORD dwStyle, int x, int y, 
 // ウィンドウ作成時のハンドラOnCreate.
 int CMainWindow::OnCreate(HWND hwnd, LPCREATESTRUCT lpCreateStruct) {
 
-	// メニューバーの作成.(ウィンドウクラス登録時にIDを指定した場合.)
-	m_pMenuBar = new CMenuBar();	// CMenuBarオブジェクトを作成し, ポインタをm_pMenuBarに格納.
+	// メインメニューバーの作成.(ウィンドウクラス登録時にIDを指定した場合.)
+	m_pMenuBar = new CMainMenuBar();	// CMainMenuBarオブジェクトを作成し, ポインタをm_pMenuBarに格納.
 
 	// ユーザコントロールの作成.
 	m_pUserControl = new CUserControl();	// CUserControlオブジェクトを作成し, ポインタをm_pUserControlに格納.

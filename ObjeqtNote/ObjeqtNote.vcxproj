@@ -152,6 +152,7 @@
     <ClCompile Include="CustomControl.cpp" />
     <ClCompile Include="EditBox.cpp" />
     <ClCompile Include="MainApplication.cpp" />
+    <ClCompile Include="MainMenuBar.cpp" />
     <ClCompile Include="MainWindow.cpp" />
     <ClCompile Include="MenuBar.cpp" />
     <ClCompile Include="MenuWindow.cpp" />
@@ -168,6 +169,7 @@
     <ClInclude Include="CustomControl.h" />
     <ClInclude Include="EditBox.h" />
     <ClInclude Include="MainApplication.h" />
+    <ClInclude Include="MainMenuBar.h" />
     <ClInclude Include="MainWindow.h" />
     <ClInclude Include="MenuBar.h" />
     <ClInclude Include="MenuWindow.h" />
