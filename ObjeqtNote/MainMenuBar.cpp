@@ -1,6 +1,7 @@
 // ヘッダのインクルード
 // 独自のヘッダ
 #include "MainMenuBar.h"	// メインメニューバークラス
+#include "MainWindow.h"	// メインウィンドウクラス
 
 // コンストラクタCMainMenuBar()
 CMainMenuBar::CMainMenuBar() : CMenuBar() {
@@ -15,17 +16,13 @@ CMainMenuBar::CMainMenuBar(HWND hWnd) : CMenuBar(hWnd) {
 // "名前を付けて保存"選択時の独自ハンドラOnFileSaveAs.
 void CMainMenuBar::OnFileSaveAs() {
 
-	// 変数の宣言
-	HWND hEdit;			// エディットボックスのウィンドウハンドルHWND型hEdit.
-	int iLen;			// エディットボックスのテキストの長さint型iLen.
-	TCHAR *ptszText;	// テキストのポインタTCHAR *型ptszText.
-
-	// エディットボックスのテキストを取得して, メッセージボックスで表示.
-	hEdit = GetDlgItem(m_hWnd, IDC_EDITBOX1);	// GetDlgItemでIDC_EDITBOX1の指すエディットボックスのウィンドウハンドルhEditを取得.
-	iLen = GetWindowTextLength(hEdit);	// GetWindowTextLengthでhEditのテキストの長さiLenを取得.
-	ptszText = new TCHAR[iLen + 1];	// TCHAR型動的配列をnewで作成し, ポインタをptszTextに格納.(長さiLen + 1)
-	GetWindowText(hEdit, ptszText, iLen + 1);	// GetWindowTextでテキストを取得し, ptszTextに格納.
-	MessageBox(NULL, ptszText, _T("ObjeqtNote"), MB_OK);	// MessageBoxでptszTextを表示.
-	delete[] ptszText;	// deleteでptszTextを解放.
+	// メインウィンドウオブジェクトの取得
+	CMainWindow *pMainWindow = dynamic_cast<CMainWindow *>(CWindow::m_mapWindowMap[m_hWnd]);	// CWindow::m_mapWindowMap[m_hWnd]でpMainWindowを取得.(途中dynamic_castしている.)
+	if (pMainWindow != NULL) {	// キャスト成功.
+		if (pMainWindow->m_pEditBox != NULL) {	// エディットボックスが生成済みの場合.
+			pMainWindow->m_pEditBox->GetWindowText();	// pMainWindow->m_pEditBox->GetWindowTextでエディットボックスのテキストを取得.
+			MessageBox(NULL, pMainWindow->m_pEditBox->m_ptszText, _T("ObjeqtNote"), MB_OK);	// MessageBoxでpMainWindow->m_pEditBox->m_ptszTextを表示.
+		}
+	}
 
 }

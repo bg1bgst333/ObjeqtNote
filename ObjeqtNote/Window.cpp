@@ -199,6 +199,22 @@ BOOL CWindow::ShowWindow(int nCmdShow){
 
 }
 
+// ウィンドウ名の長さ取得関数GetWindowTextLength.
+int CWindow::GetWindowTextLength() {
+
+	// ウィンドウ名の長さを取得.
+	return ::GetWindowTextLength(m_hWnd);	// WindowsAPIのGetWindowTextLengthでm_hWndのウィンドウ名の長さを取得し, returnで戻り値として返す.
+
+}
+
+// ウィンドウ名取得関数GetWindowText.
+int CWindow::GetWindowText(LPTSTR lpszStringBuf, int nMaxCount) {
+
+	// ウィンドウ名を取得.
+	return ::GetWindowText(m_hWnd, lpszStringBuf, nMaxCount);	// WindowsAPIのGetWindowTextでm_hWndのウィンドウ名を取得し, returnで戻り値として返す.
+
+}
+
 // StaticWindowProcから各ウィンドウオブジェクトごとに呼び出されるサブウィンドウプロシージャDynamicWindowProc.
 LRESULT CWindow::DynamicWindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam){
 
