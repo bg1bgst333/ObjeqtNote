@@ -21,6 +21,7 @@ class CMenuBar {
 		// publicメンバ関数
 		// コンストラクタ・デストラクタ
 		CMenuBar();	// コンストラクタCMenuBar()
+		CMenuBar(HWND hWnd);	// コンストラクタCMenuBar(HWND hWnd)
 		virtual ~CMenuBar();	// デストラクタ~CMenuBar()
 
 		// メンバ関数

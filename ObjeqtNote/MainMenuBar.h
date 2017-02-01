@@ -14,6 +14,7 @@ class CMainMenuBar : public CMenuBar {
 		// publicメンバ関数
 		// コンストラクタ・デストラクタ
 		CMainMenuBar();	// コンストラクタCMainMenuBar()
+		CMainMenuBar(HWND hWnd);	// コンストラクタCMainMenuBar(HWND hWnd)
 
 		// メンバ関数
 		virtual void OnFileSaveAs();	// "名前を付けて保存"選択時の独自ハンドラOnFileSaveAs.

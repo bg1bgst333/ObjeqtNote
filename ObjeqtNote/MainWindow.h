@@ -5,6 +5,7 @@
 #include "StandardWindow.h"	// スタンダードウィンドウクラス
 #include "EditBox.h"		// エディットボックスクラス
 #include "UserControl.h"	// ユーザコントロールクラス
+#include "resource.h"			// リソース
 
 // メインウィンドウクラスCMainWindow
 class CMainWindow : public CStandardWindow {

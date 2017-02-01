@@ -49,7 +49,7 @@ BOOL CMainWindow::Create(LPCTSTR lpctszWindowName, DWORD dwStyle, int x, int y, 
 int CMainWindow::OnCreate(HWND hwnd, LPCREATESTRUCT lpCreateStruct) {
 
 	// メインメニューバーの作成.(ウィンドウクラス登録時にIDを指定した場合.)
-	m_pMenuBar = new CMainMenuBar();	// CMainMenuBarオブジェクトを作成し, ポインタをm_pMenuBarに格納.
+	m_pMenuBar = new CMainMenuBar(hwnd);	// CMainMenuBarのコンストラクタにhwndを渡してオブジェクトを作成し, ポインタをm_pMenuBarに格納.
 
 	// ユーザコントロールの作成.
 	m_pUserControl = new CUserControl();	// CUserControlオブジェクトを作成し, ポインタをm_pUserControlに格納.
@@ -57,7 +57,7 @@ int CMainWindow::OnCreate(HWND hwnd, LPCREATESTRUCT lpCreateStruct) {
 
 	// エディットボックスの作成.
 	m_pEditBox = new CEditBox();	// CEditBoxオブジェクトを作成し, ポインタをm_pEditBoxに格納.
-	m_pEditBox->Create(_T(""), WS_BORDER | ES_MULTILINE | ES_AUTOVSCROLL, 150, 150, 200, 50, hwnd, (HMENU)(WM_APP + 2), lpCreateStruct->hInstance);	// m_pEditBox->Createでエディットボックスを作成.
+	m_pEditBox->Create(_T(""), WS_BORDER | ES_MULTILINE | ES_AUTOVSCROLL, 150, 150, 200, 50, hwnd, (HMENU)IDC_EDITBOX1, lpCreateStruct->hInstance);	// m_pEditBox->Createでエディットボックスを作成.
 
 	// 成功.
 	return 0;	// 成功なので0を返す.
