@@ -16,11 +16,14 @@ CBinaryFile::CBinaryFile(){
 CBinaryFile::~CBinaryFile(){
 
 	// メンバ変数の終了処理
+	ZeroMemory(m_tszFileName, sizeof(TCHAR) * 1024);	// ZeroMemoryでm_tszFileNameを0で埋める.
 	if (m_pByte != NULL) {	// NULLでなければ.
 		delete[] m_pByte;	// deleteでm_pByteを解放.
+		m_pByte = NULL;		// m_pByteにNULLをセット.
 	}
 	if (m_hFile != NULL) {	// NULLでなければ.
-		Close();	// 閉じる.
+		Close();			// 閉じる.
+		m_hFile = NULL;		// m_hFileにNULLをセット.
 	}
 
 }

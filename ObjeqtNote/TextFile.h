@@ -26,5 +26,6 @@ class CTextFile : public CBinaryFile {
 
 		// メンバ関数
 		BOOL Write(LPCTSTR lpctszText, EncodeType eEncodeType);	// ファイルを書き込むメンバ関数Write.(lpctszTextは変換前のUNICODE文字列.eEncodeTypeで文字コード指定.)
+		int Encode(BYTE **ppBuf, LPCTSTR lpctszText, EncodeType eEncodeType);	// 指定の文字コードのバイト列に変換する関数Encode.(バッファメモリはppBufの指すバッファに内部で割り当てる.)
 
 };
