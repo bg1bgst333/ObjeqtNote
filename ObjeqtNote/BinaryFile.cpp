@@ -60,6 +60,41 @@ BOOL CBinaryFile::Write(BYTE * pBytes, UINT nCount){
 	DWORD dwBytes = 0;	// DWORD型dwBytesを0で初期化.
 
 	// pBytesを書き込む.
-	return WriteFile(m_hFile, pBytes, nCount, &dwBytes, NULL);	// WriteFileでpBytesの内容を書き込む.
+	return WriteFile(m_hFile, pBytes, nCount, &dwBytes, NULL);	// WriteileでpBytesの内容を書き込む.
+
+}
+
+// "名前を付けて保存"のファイルダイアログを表示し, 選択されたファイル名を取得するメンバ関数GetSaveFileName.
+BOOL CBinaryFile::GetSaveFileName(LPTSTR lptszFileName, int nMax, LPCTSTR lpctszFilter, HWND hWnd){
+
+	// 変数の初期化
+	OPENFILENAME ofn = { 0 };							// OPENFILENAME構造体変数ofnを0で初期化.
+	TCHAR tszFilter[1024] = { 0 };						// tszFilterを0で初期化.
+
+	// ofnの設定
+	ofn.lStructSize = sizeof(OPENFILENAME);				// OPENFILENAME構造体のサイズをセット.
+	ofn.hwndOwner = hWnd;								// 指定されたhWndをセット.
+	int len = _tcslen(lpctszFilter);					// lpctszFilterの長さを取得.
+	_tcscpy_s(tszFilter, 1024, lpctszFilter);			// lpctszFilterをtszFilterにコピー.
+	for (int i = len - 1; i >= 0; i--) {				// 後ろから'|'を'\0'に置き換える.
+		if (tszFilter[i] == FITLER_DELIMITER_CHAR) {	// '|'だった場合.
+			tszFilter[i] = _T('\0');					// tszFilter[i]に'|'を代入.
+		}
+	}
+	ofn.lpstrFilter = tszFilter;						// tszFilterをセット.
+	ofn.lpstrFile = lptszFileName;						// 指定されたlpctszFileNameをセット.
+	ofn.nMaxFile = nMax;								// 指定されたnMaxをセット.
+	ofn.Flags = OFN_OVERWRITEPROMPT;					// 上書き時のメッセージボックス表示.
+
+	// "名前を付けて保存"ファイルダイアログの表示.
+	if (!::GetSaveFileName(&ofn)) {						// GetSaveFileNameで"名前を付けて保存"ファイルダイアログを表示.
+
+		// 選択肢なかった場合.
+		return FALSE;	// FALSEを返す.
+
+	}
+
+	// 選択した場合.
+	return TRUE;		// TRUEを返す.
 
 }
