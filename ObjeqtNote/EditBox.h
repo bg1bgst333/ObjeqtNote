@@ -24,5 +24,6 @@ class CEditBox : public CCustomControl {
 		virtual void DestroyTextBuffer();	// エディットボックスのテキストを格納するバッファ破棄関数DestroyTextBuffer.
 		virtual int GetWindowTextLength();	// エディットボックスのテキストの長さ取得関数GetWindowTextLength.
 		virtual int GetWindowText();		// エディットボックスのテキストの取得関数GetWindowText.(自前の内部バッファに読み込む.)
+		virtual void SetWindowText();		// エディットボックスのテキストの設定関数SetWindowText.(自前の内部バッファに格納されているものをセット.)
 
 };

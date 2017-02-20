@@ -60,7 +60,7 @@ BOOL CBinaryFile::Write(BYTE * pBytes, UINT nCount){
 	DWORD dwBytes = 0;	// DWORD型dwBytesを0で初期化.
 
 	// pBytesを書き込む.
-	return WriteFile(m_hFile, pBytes, nCount, &dwBytes, NULL);	// WriteileでpBytesの内容を書き込む.
+	return WriteFile(m_hFile, pBytes, nCount, &dwBytes, NULL);	// WriteFileでpBytesの内容を書き込む.
 
 }
 
@@ -99,6 +99,17 @@ BOOL CBinaryFile::GetSaveFileName(LPTSTR lptszFileName, int nMax, LPCTSTR lpctsz
 
 }
 
+// ファイルを読み込むメンバ関数Read.(pBytesは外部でバッファを持っている場合のバッファへのポインタ.)
+BOOL CBinaryFile::Read(BYTE * pBytes, UINT nCount){
+
+	// 変数の初期化
+	DWORD dwBytes = 0;	// DWORD型dwBytesを0で初期化.
+
+	// pBytesを読み込む.
+	return ReadFile(m_hFile, pBytes, nCount, &dwBytes, NULL);	// ReadFileでpBytesに内容を読み込む.
+
+}
+
 // "開く"のファイルダイアログを表示し, 選択されたファイル名を取得するメンバ関数GetOpenFileName.
 BOOL CBinaryFile::GetOpenFileName(LPTSTR lptszFileName, int nMax, LPCTSTR lpctszFilter, HWND hWnd){
 
@@ -131,5 +142,13 @@ BOOL CBinaryFile::GetOpenFileName(LPTSTR lptszFileName, int nMax, LPCTSTR lpctsz
 
 	// 選択した場合.
 	return TRUE;		// TRUEを返す.
+
+}
+
+// ファイルサイズの取得関数GetFileSize.
+DWORD CBinaryFile::GetFileSize(LPDWORD lpHigh){
+
+	// ファイルサイズの取得.
+	return ::GetFileSize(m_hFile, lpHigh);	// WindowsAPIのGetFileSizeでサイズを取得し, それを返す.
 
 }

@@ -42,13 +42,24 @@ void CMainMenuBar::OnFileOpen(){
 			// ファイル選択ダイアログの表示.
 			if (pTextFile->GetOpenFileName(pTextFile->m_tszFileName, 1024, tszFilter, m_hWnd)) {	// 選択されたら.
 
-				// ファイル名の表示.
-				MessageBox(NULL, pTextFile->m_tszFileName, _T("ObjeqtNote"), MB_OK);	// MessageBoxでpTextFile->m_tszFileNameを表示.
+				// pTextFile->m_tszFileNameを開く.
+				if (pTextFile->Open(pTextFile->m_tszFileName, GENERIC_READ, OPEN_EXISTING)) {	// pTextFile->Openでファイルを開けたら.
+
+					// pTextFile->m_tszFileNameから読み込んだテキストをUNICODEに変換.
+					pMainWindow->m_pEditBox->m_iLen = pTextFile->Read(&pMainWindow->m_pEditBox->m_ptszText, CTextFile::SHIFT_JIS);	// pTextFile->Readで読み込んでpMainWindow->m_pEditBox->m_ptszTextにテキストを格納, 長さをpMainWindow->m_pEditBox->m_iLenに格納.
+
+					// 閉じる.
+					pTextFile->Close();	// pTextFile->Closeで閉じる.
+
+				}
 
 			}
 
 			// オブジェクトの解放.
 			delete pTextFile;	// deleteでpTextFileを解放.
+
+			// エディットボックスのテキストを設定.
+			pMainWindow->m_pEditBox->SetWindowText();	// pMainWindow->m_pEditBox->SetWindowTextでエディットボックスのテキストを設定.
 
 		}
 	}

@@ -81,3 +81,13 @@ int CEditBox::GetWindowText() {
 	return m_iLen;	// m_iLenを返す.
 
 }
+
+// エディットボックスのテキストの設定関数SetWindowText.(自前の内部バッファに格納されているものをセット.)
+void CEditBox::SetWindowText() {
+
+	// バッファにセットされていた時にエディットボックスにセット.
+	if (m_ptszText != NULL && m_iLen > 0) {	// テキストがセットされているなら.
+		::SetWindowText(m_hWnd, m_ptszText);	// SetWindowTextでm_ptszTextをエディットボックスにセット.
+	}
+
+}
