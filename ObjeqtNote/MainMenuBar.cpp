@@ -14,6 +14,47 @@ CMainMenuBar::CMainMenuBar(HWND hWnd) : CMenuBar(hWnd){
 
 }
 
+// "開く"選択時の独自ハンドラOnFileOpen.
+void CMainMenuBar::OnFileOpen(){
+
+	// メインウィンドウオブジェクトの取得
+	CMainWindow *pMainWindow = dynamic_cast<CMainWindow *>(CWindow::m_mapWindowMap[m_hWnd]);	// CWindow::m_mapWindowMap[m_hWnd]でpMainWindowを取得.(途中dynamic_castしている.)
+	if (pMainWindow != NULL) {	// キャスト成功.
+		if (pMainWindow->m_pEditBox != NULL) {	// エディットボックスが生成済みの場合.
+
+			// オブジェクトの宣言
+			CTextFile *pTextFile;	// テキストファイルポインタCTextFile *型pTextFile.
+
+			// CTextFileオブジェクトでテキストを保存.
+			pTextFile = new CTextFile();	// CTextFileオブジェクトを作成し, ポインタをpTextFileに格納.
+
+			// 開くファイルを選択.
+			// フィルタ文字列の作成.
+			TCHAR tszFilter[1024] = { 0 };	// 拡張子でフィルタリングするフィルタtszFilter.
+			_tcscat_s(tszFilter, 1024, FILTER_TEXT_BIN_FILE);	// "バイナリファイル"
+			_tcscat_s(tszFilter, 1024, FITLER_DELIMITER);		// 区切り文字
+			_tcscat_s(tszFilter, 1024, FILTER_RULE_BIN_FILE);	// "*.bin"
+			_tcscat_s(tszFilter, 1024, FITLER_DELIMITER);		// 区切り文字
+			_tcscat_s(tszFilter, 1024, FILTER_TEXT_ALL_FILE);	// "すべてのファイル"
+			_tcscat_s(tszFilter, 1024, FITLER_DELIMITER);		// 区切り文字
+			_tcscat_s(tszFilter, 1024, FILTER_RULE_ALL_FILE);	// "*.*"
+			_tcscat_s(tszFilter, 1024, FILTER_END);				// 終了文字
+			// ファイル選択ダイアログの表示.
+			if (pTextFile->GetOpenFileName(pTextFile->m_tszFileName, 1024, tszFilter, m_hWnd)) {	// 選択されたら.
+
+				// ファイル名の表示.
+				MessageBox(NULL, pTextFile->m_tszFileName, _T("ObjeqtNote"), MB_OK);	// MessageBoxでpTextFile->m_tszFileNameを表示.
+
+			}
+
+			// オブジェクトの解放.
+			delete pTextFile;	// deleteでpTextFileを解放.
+
+		}
+	}
+
+}
+
 // "名前を付けて保存"選択時の独自ハンドラOnFileSaveAs.
 void CMainMenuBar::OnFileSaveAs(){
 

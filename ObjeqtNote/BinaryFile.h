@@ -36,5 +36,6 @@ class CBinaryFile {
 		void Close();	// ファイルを閉じるメンバ関数Close.
 		BOOL Write(BYTE *pBytes, UINT nCount);	// ファイルを書き込むメンバ関数Write.(pBytesは外部でバッファを持っている場合の書き込み対象バイト列.)
 		BOOL GetSaveFileName(LPTSTR lptszFileName, int nMax, LPCTSTR lpctszFilter, HWND hWnd);	// "名前を付けて保存"のファイルダイアログを表示し, 選択されたファイル名を取得するメンバ関数GetSaveFileName.
+		BOOL GetOpenFileName(LPTSTR lptszFileName, int nMax, LPCTSTR lpctszFilter, HWND hWnd);	// "開く"のファイルダイアログを表示し, 選択されたファイル名を取得するメンバ関数GetOpenFileName.
 
 };

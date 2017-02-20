@@ -17,6 +17,7 @@ class CMainMenuBar : public CMenuBar {
 		CMainMenuBar(HWND hWnd);	// コンストラクタCMainMenuBar(HWND hWnd)
 
 		// メンバ関数
+		virtual void OnFileOpen();		// "開く"選択時の独自ハンドラOnFileOpen.
 		virtual void OnFileSaveAs();	// "名前を付けて保存"選択時の独自ハンドラOnFileSaveAs.
 
 };
