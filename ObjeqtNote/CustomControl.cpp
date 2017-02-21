@@ -149,6 +149,26 @@ LRESULT CCustomControl::DynamicWindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, L
 			// 既定の処理へ向かう.
 			break;	// 抜けてDefWindowProcに向かう.
 
+		// ウィンドウサイズが変更された時.
+		case WM_SIZE:
+
+
+			// WM_SIZEブロック
+			{
+
+				// 変数の初期化.
+				UINT nType = wParam;		// nTypeをwParamで初期化.
+				int cx = LOWORD(lParam);	// cxをLOWORD(lParam)で初期化.
+				int cy = HIWORD(lParam);	// cyをHIWORD(lParam)で初期化.
+
+				// OnSizeに任せる.
+				OnSize(nType, cx, cy);	// OnSizeにnType, cx, cyを渡す.
+
+			}
+
+			// 既定の処理へ向かう.
+			break;	// 抜けてDefWindowProcに向かう.
+
 		// それ以外の時.
 		default:
 

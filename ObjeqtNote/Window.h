@@ -46,11 +46,13 @@ class CWindow {
 		virtual BOOL Create(LPCTSTR lpctszClassName, LPCTSTR lpctszWindowName, DWORD dwStyle, int x, int y, int iWidth, int iHeight, HWND hWndParent, HMENU hMenu, HINSTANCE hInstance);	// ウィンドウ作成関数Create
 		virtual BOOL Create(LPCTSTR lpctszWindowName, DWORD dwStyle, int x, int y, int iWidth, int iHeight, HWND hWndParent, HMENU hMenu, HINSTANCE hInstance);	// ウィンドウ作成関数Create(lpctszClassName省略)
 		virtual BOOL ShowWindow(int nCmdShow);	// ウィンドウ表示関数ShowWindow
+		virtual BOOL MoveWindow(int x, int y, int iWidth, int iHeight);	// 位置とサイズを変更する関数MoveWindow.
 		virtual int GetWindowTextLength();	// ウィンドウ名の長さ取得関数GetWindowTextLength.
 		virtual int GetWindowText(LPTSTR lpszStringBuf, int nMaxCount);	// ウィンドウ名取得関数GetWindowText.
 		virtual LRESULT DynamicWindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);	// StaticWindowProcから各ウィンドウオブジェクトごとに呼び出されるサブウィンドウプロシージャDynamicWindowProc.
 		virtual int OnCreate(HWND hwnd, LPCREATESTRUCT lpCreateStruct);	// ウィンドウ作成時のハンドラOnCreate.
 		virtual void OnDestroy();	// ウィンドウ破棄時のハンドラOnDestroy.
 		virtual BOOL OnCommand(WPARAM wParam, LPARAM lParam);	// コマンド処理時のハンドラOnCommand.
+		virtual void OnSize(UINT nType, int cx, int cy);	// ウィンドウサイズが変更された時のハンドラOnSize.
 
 };

@@ -199,6 +199,18 @@ BOOL CWindow::ShowWindow(int nCmdShow){
 
 }
 
+// 位置とサイズを変更する関数MoveWindow.
+BOOL CWindow::MoveWindow(int x, int y, int iWidth, int iHeight) {
+
+	// エディットボックスのサイズを変更する.
+	m_x = x;				// m_xにxをセット.
+	m_y = y;				// m_yにyをセット.
+	m_iWidth = iWidth;		// m_iWidthにiWidthをセット.
+	m_iHeight = iHeight;	// m_iHeightにiHeightをセット.	
+	return ::MoveWindow(m_hWnd, m_x, m_y, m_iWidth, m_iHeight, TRUE);	// WindowsAPIのMoveWindowで位置とサイズを変更.
+
+}
+
 // ウィンドウ名の長さ取得関数GetWindowTextLength.
 int CWindow::GetWindowTextLength() {
 
@@ -263,6 +275,25 @@ LRESULT CWindow::DynamicWindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM l
 			// 既定の処理へ向かう.
 			break;	// 抜けてDefWindowProcに向かう.
 
+		// ウィンドウサイズが変更された時.
+		case WM_SIZE:
+
+			// WM_SIZEブロック
+			{
+
+				// 変数の初期化.
+				UINT nType = wParam;		// nTypeをwParamで初期化.
+				int cx = LOWORD(lParam);	// cxをLOWORD(lParam)で初期化.
+				int cy = HIWORD(lParam);	// cyをHIWORD(lParam)で初期化.
+
+				// OnSizeに任せる.
+				OnSize(nType, cx, cy);	// OnSizeにnType, cx, cyを渡す.
+
+			}
+
+			// 既定の処理へ向かう.
+			break;	// 抜けてDefWindowProcに向かう.
+
 		// それ以外の時.
 		default:
 
@@ -297,5 +328,12 @@ BOOL CWindow::OnCommand(WPARAM wParam, LPARAM lParam){
 
 	// とりあえずTRUEを返す.
 	return TRUE;	// TRUEを返す.
+
+}
+
+// ウィンドウサイズが変更された時のハンドラOnSize.
+void CWindow::OnSize(UINT nType, int cx, int cy) {
+
+	// 特に何もしない.
 
 }
