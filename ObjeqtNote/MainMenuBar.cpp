@@ -31,9 +31,9 @@ void CMainMenuBar::OnFileOpen(){
 			// 開くファイルを選択.
 			// フィルタ文字列の作成.
 			TCHAR tszFilter[1024] = { 0 };	// 拡張子でフィルタリングするフィルタtszFilter.
-			_tcscat_s(tszFilter, 1024, FILTER_TEXT_BIN_FILE);	// "バイナリファイル"
+			_tcscat_s(tszFilter, 1024, FILTER_TEXT_TXT_FILE);	// "テキストファイル"
 			_tcscat_s(tszFilter, 1024, FITLER_DELIMITER);		// 区切り文字
-			_tcscat_s(tszFilter, 1024, FILTER_RULE_BIN_FILE);	// "*.bin"
+			_tcscat_s(tszFilter, 1024, FILTER_RULE_TXT_FILE);	// "*.txt"
 			_tcscat_s(tszFilter, 1024, FITLER_DELIMITER);		// 区切り文字
 			_tcscat_s(tszFilter, 1024, FILTER_TEXT_ALL_FILE);	// "すべてのファイル"
 			_tcscat_s(tszFilter, 1024, FITLER_DELIMITER);		// 区切り文字
@@ -86,9 +86,9 @@ void CMainMenuBar::OnFileSaveAs(){
 			// 保存先のファイルを選択.
 			// フィルタ文字列の作成.
 			TCHAR tszFilter[1024] = { 0 };	// 拡張子でフィルタリングするフィルタtszFilter.
-			_tcscat_s(tszFilter, 1024, FILTER_TEXT_BIN_FILE);	// "バイナリファイル"
+			_tcscat_s(tszFilter, 1024, FILTER_TEXT_TXT_FILE);	// "テキストファイル"
 			_tcscat_s(tszFilter, 1024, FITLER_DELIMITER);		// 区切り文字
-			_tcscat_s(tszFilter, 1024, FILTER_RULE_BIN_FILE);	// "*.bin"
+			_tcscat_s(tszFilter, 1024, FILTER_RULE_TXT_FILE);	// "*.txt"
 			_tcscat_s(tszFilter, 1024, FITLER_DELIMITER);		// 区切り文字
 			_tcscat_s(tszFilter, 1024, FILTER_TEXT_ALL_FILE);	// "すべてのファイル"
 			_tcscat_s(tszFilter, 1024, FITLER_DELIMITER);		// 区切り文字

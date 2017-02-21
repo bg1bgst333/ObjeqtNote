@@ -4,6 +4,10 @@
 // 独自のヘッダ
 #include "BinaryFile.h"	// バイナリファイルクラス
 
+// マクロの定義
+#define FILTER_TEXT_TXT_FILE _T("テキストファイル(*.txt)")
+#define FILTER_RULE_TXT_FILE _T("*.txt")
+
 // テキストファイルクラスCTextFile
 class CTextFile : public CBinaryFile {
 
