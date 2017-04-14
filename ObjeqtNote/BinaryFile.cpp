@@ -9,7 +9,7 @@ BOOL CBinaryFile::GetOpenFileName(LPTSTR lptszFileName, int nMax, LPCTSTR lpctsz
 	OPENFILENAME ofn = { 0 };							// OPENFILENAME構造体変数ofnを0で初期化.
 	TCHAR tszFilter[1024] = { 0 };						// tszFilterを0で初期化.
 
-														// ofnの設定
+	// ofnの設定
 	ofn.lStructSize = sizeof(OPENFILENAME);				// OPENFILENAME構造体のサイズをセット.
 	ofn.hwndOwner = hWnd;								// 指定されたhWndをセット.
 	int len = _tcslen(lpctszFilter);					// lpctszFilterの長さを取得.
@@ -24,10 +24,10 @@ BOOL CBinaryFile::GetOpenFileName(LPTSTR lptszFileName, int nMax, LPCTSTR lpctsz
 	ofn.nMaxFile = nMax;								// 指定されたnMaxをセット.
 	ofn.Flags = OFN_FILEMUSTEXIST;						// ファイルが存在しないと決定できない.
 
-														// "開く"ファイルダイアログの表示.
+	// "開く"ファイルダイアログの表示.
 	if (!::GetOpenFileName(&ofn)) {						// GetOpenFileNameで"開く"ファイルダイアログを表示.
 
-														// 選択しなかった場合.
+		// 選択しなかった場合.
 		return FALSE;	// FALSEを返す.
 
 	}
@@ -35,7 +35,7 @@ BOOL CBinaryFile::GetOpenFileName(LPTSTR lptszFileName, int nMax, LPCTSTR lpctsz
 	// 拡張子を取得.
 	_tcscpy_s(lptszExtension, 16, PathFindExtension(lptszFileName));	// PathFindExtensionで取得した拡張子をlptszExtensionにコピー.
 
-																		// 選択した場合.
+	// 選択した場合.
 	return TRUE;		// TRUEを返す.
 
 }
