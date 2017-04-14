@@ -5,6 +5,7 @@
 // 既定のヘッダ
 #include <windows.h>	// 標準WindowsAPI
 #include <tchar.h>		// TCHAR型
+#include <shlwapi.h>		// シェルAPI
 
 // マクロの定義
 #define FITLER_DELIMITER _T("|")
@@ -27,6 +28,9 @@ class CBinaryFile {
 		BYTE *m_pByte;	// バイナリデータへのポインタBYTE *型m_pByte
 
 		// publicメンバ関数
+		// スタティックメンバ関数
+		static BOOL GetOpenFileName(LPTSTR lptszFileName, int nMax, LPCTSTR lpctszFilter, HWND hWnd, LPTSTR lptszExtension);	// "開く"のファイルダイアログを表示し, 選択されたファイル名を取得するメンバ関数GetOpenFileName.(スタティックメンバ関数.lptszExtensionに拡張子を返す.)
+
 		// コンストラクタ・デストラクタ
 		CBinaryFile();	// コンストラクタCBinaryFile()
 		virtual ~CBinaryFile();	// デストラクタ~CBinaryFile()

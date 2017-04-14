@@ -2,6 +2,44 @@
 // 独自のヘッダ
 #include "BinaryFile.h"	// バイナリファイルクラス
 
+// "開く"のファイルダイアログを表示し, 選択されたファイル名を取得するメンバ関数GetOpenFileName.(スタティックメンバ関数.)
+BOOL CBinaryFile::GetOpenFileName(LPTSTR lptszFileName, int nMax, LPCTSTR lpctszFilter, HWND hWnd, LPTSTR lptszExtension) {
+
+	// 変数の初期化
+	OPENFILENAME ofn = { 0 };							// OPENFILENAME構造体変数ofnを0で初期化.
+	TCHAR tszFilter[1024] = { 0 };						// tszFilterを0で初期化.
+
+														// ofnの設定
+	ofn.lStructSize = sizeof(OPENFILENAME);				// OPENFILENAME構造体のサイズをセット.
+	ofn.hwndOwner = hWnd;								// 指定されたhWndをセット.
+	int len = _tcslen(lpctszFilter);					// lpctszFilterの長さを取得.
+	_tcscpy_s(tszFilter, 1024, lpctszFilter);			// lpctszFilterをtszFilterにコピー.
+	for (int i = len - 1; i >= 0; i--) {				// 後ろから'|'を'\0'に置き換える.
+		if (tszFilter[i] == FITLER_DELIMITER_CHAR) {	// '|'だった場合.
+			tszFilter[i] = _T('\0');					// tszFilter[i]に'|'を代入.
+		}
+	}
+	ofn.lpstrFilter = tszFilter;						// tszFilterをセット.
+	ofn.lpstrFile = lptszFileName;						// 指定されたlpctszFileNameをセット.
+	ofn.nMaxFile = nMax;								// 指定されたnMaxをセット.
+	ofn.Flags = OFN_FILEMUSTEXIST;						// ファイルが存在しないと決定できない.
+
+														// "開く"ファイルダイアログの表示.
+	if (!::GetOpenFileName(&ofn)) {						// GetOpenFileNameで"開く"ファイルダイアログを表示.
+
+														// 選択しなかった場合.
+		return FALSE;	// FALSEを返す.
+
+	}
+
+	// 拡張子を取得.
+	_tcscpy_s(lptszExtension, 16, PathFindExtension(lptszFileName));	// PathFindExtensionで取得した拡張子をlptszExtensionにコピー.
+
+																		// 選択した場合.
+	return TRUE;		// TRUEを返す.
+
+}
+
 // コンストラクタCBinaryFile()
 CBinaryFile::CBinaryFile(){
 

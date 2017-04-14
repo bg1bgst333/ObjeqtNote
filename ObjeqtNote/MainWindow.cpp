@@ -51,14 +51,6 @@ int CMainWindow::OnCreate(HWND hwnd, LPCREATESTRUCT lpCreateStruct) {
 	// メインメニューバーの作成.(ウィンドウクラス登録時にIDを指定した場合.)
 	m_pMenuBar = new CMainMenuBar(hwnd);	// CMainMenuBarのコンストラクタにhwndを渡してオブジェクトを作成し, ポインタをm_pMenuBarに格納.
 
-	// ユーザコントロールの作成.
-	m_pUserControl = new CUserControl();	// CUserControlオブジェクトを作成し, ポインタをm_pUserControlに格納.
-	m_pUserControl->Create(_T("UserControl"), _T(""), WS_BORDER, 50, 50, 100, 100, hwnd, (HMENU)(WM_APP + 1), lpCreateStruct->hInstance);	// m_pUserControl->Createでウィンドウクラス名"UserControl"なウィンドウを作成.
-
-	// エディットボックスの作成.
-	m_pEditBox = new CEditBox();	// CEditBoxオブジェクトを作成し, ポインタをm_pEditBoxに格納.
-	m_pEditBox->Create(_T(""), ES_MULTILINE | ES_WANTRETURN | ES_AUTOHSCROLL | ES_AUTOVSCROLL | WS_HSCROLL | WS_VSCROLL, 50, 50, 200, 50, hwnd, (HMENU)IDC_EDITBOX1, lpCreateStruct->hInstance);	// m_pEditBox->Createでエディットボックスを作成.
-
 	// 成功.
 	return 0;	// 成功なので0を返す.
 
@@ -66,8 +58,5 @@ int CMainWindow::OnCreate(HWND hwnd, LPCREATESTRUCT lpCreateStruct) {
 
 // ウィンドウサイズが変更された時のハンドラOnSize.
 void CMainWindow::OnSize(UINT nType, int cx, int cy) {
-
-	// エディットボックスをウィンドウ一杯に広げる.
-	m_pEditBox->MoveWindow(0, 0, cx, cy);	// m_pEditBox->MoveWindowで位置(0, 0), サイズ(cx, cy)をセット.
 
 }
