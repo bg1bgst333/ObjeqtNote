@@ -19,6 +19,7 @@ CMainWindow::CMainWindow() : CStandardWindow() {
 	// メンバの初期化
 	m_pUserControl = NULL;		// m_pUserControlをNULLで初期化.
 	m_pEditBox = NULL;			// m_pEditBoxをNULLで初期化.
+	m_pPictureBox = NULL;		// m_pPictureBoxをNULLで初期化.
 
 }
 
@@ -26,13 +27,17 @@ CMainWindow::CMainWindow() : CStandardWindow() {
 CMainWindow::~CMainWindow() {
 
 	// メンバの終了処理.
+	if (m_pPictureBox != NULL) {
+		delete m_pPictureBox;		// deleteでm_pPictureBoxを解放.
+		m_pPictureBox = NULL;		// m_pPictureBoxをNULLで埋める.
+	}
 	if (m_pEditBox != NULL) {
 		delete m_pEditBox;			// deleteでm_pEditBoxを解放.
 		m_pEditBox = NULL;			// m_pEditBoxをNULLで埋める.
 	}
 	if (m_pUserControl != NULL) {
-		delete m_pUserControl;	// deleteでm_pUserControlを解放.
-		m_pUserControl = NULL;	// m_pUserControlをNULLで埋める.
+		delete m_pUserControl;		// deleteでm_pUserControlを解放.
+		m_pUserControl = NULL;		// m_pUserControlをNULLで埋める.
 	}
 
 }
@@ -50,6 +55,10 @@ int CMainWindow::OnCreate(HWND hwnd, LPCREATESTRUCT lpCreateStruct) {
 
 	// メインメニューバーの作成.(ウィンドウクラス登録時にIDを指定した場合.)
 	m_pMenuBar = new CMainMenuBar(hwnd);	// CMainMenuBarのコンストラクタにhwndを渡してオブジェクトを作成し, ポインタをm_pMenuBarに格納.
+
+	// ピクチャーボックスの作成.
+	m_pPictureBox = new CPictureBox();	// CPictureBoxオブジェクトを作成し, ポインタをm_pPictureBoxに格納.
+	m_pPictureBox->Create(_T(""), SS_BITMAP | WS_HSCROLL | WS_VSCROLL, 50, 50, 320, 240, hwnd, (HMENU)IDC_PICTUREBOX1, lpCreateStruct->hInstance);	// m_pPictureBox->Createでピクチャーボックスを作成.
 
 	// 成功.
 	return 0;	// 成功なので0を返す.

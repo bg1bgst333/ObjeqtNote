@@ -159,6 +159,7 @@
     <ClCompile Include="MainWindow.cpp" />
     <ClCompile Include="MenuBar.cpp" />
     <ClCompile Include="MenuWindow.cpp" />
+    <ClCompile Include="PictureBox.cpp" />
     <ClCompile Include="StandardApplication.cpp" />
     <ClCompile Include="StandardWindow.cpp" />
     <ClCompile Include="TextFile.cpp" />
@@ -178,6 +179,7 @@
     <ClInclude Include="MainWindow.h" />
     <ClInclude Include="MenuBar.h" />
     <ClInclude Include="MenuWindow.h" />
+    <ClInclude Include="PictureBox.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="StandardApplication.h" />
     <ClInclude Include="StandardWindow.h" />

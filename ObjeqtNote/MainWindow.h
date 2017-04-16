@@ -4,6 +4,7 @@
 // 独自のヘッダ
 #include "StandardWindow.h"	// スタンダードウィンドウクラス
 #include "EditBox.h"		// エディットボックスクラス
+#include "PictureBox.h"		// ピクチャーボックスクラス
 #include "UserControl.h"	// ユーザコントロールクラス
 #include "resource.h"			// リソース
 
@@ -16,6 +17,7 @@ class CMainWindow : public CStandardWindow {
 		// publicメンバ変数
 		CUserControl *m_pUserControl;		// CUserControl *型ユーザコントロールオブジェクトポインタm_pUserControl
 		CEditBox *m_pEditBox;				// CEditBox *型エディットボックスオブジェクトポインタm_pEditBox
+		CPictureBox *m_pPictureBox;			// CPictureBox *型ピクチャーボックスオブジェクトポインタm_pPictureBox
 
 		// publicメンバ関数
 		// staticメンバ関数

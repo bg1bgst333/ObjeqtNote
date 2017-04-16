@@ -35,7 +35,15 @@ void CMainMenuBar::OnFileOpen(){
 			MessageBox(NULL, _T("テキストファイル"), _T("ObjeqtNote"), MB_OK);	// "テキストファイル"と表示.
 		}
 		else if (!_tcsicmp(tszExtension, _T(".bmp"))) {	// ".bmp"なら.
-			MessageBox(NULL, _T("ビットマップファイル"), _T("ObjeqtNote"), MB_OK);	// "ビットマップファイル"と表示.
+
+			// 画像の表示.
+			if (pMainWindow->m_pPictureBox != NULL) {	// pMainWindow->m_pPictureBoxがNULLでなければ.
+				BOOL bRet = pMainWindow->m_pPictureBox->Load(tszFileName, 0, 0);	// pMainWindow->m_pPictureBox->LoadでtszFileNameをロード.
+				if (bRet) {	// ロード成功なら.
+					pMainWindow->m_pPictureBox->SetImage();	// pMainWindow->m_pPictureBox->SetImageで画像をセット.
+				}
+			}
+
 		}
 
 	}
