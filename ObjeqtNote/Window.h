@@ -54,5 +54,6 @@ class CWindow {
 		virtual void OnDestroy();	// ウィンドウ破棄時のハンドラOnDestroy.
 		virtual BOOL OnCommand(WPARAM wParam, LPARAM lParam);	// コマンド処理時のハンドラOnCommand.
 		virtual void OnSize(UINT nType, int cx, int cy);	// ウィンドウサイズが変更された時のハンドラOnSize.
+		virtual void OnPaint();	// ウィンドウの描画を要求された時のハンドラOnPaint.
 
 };

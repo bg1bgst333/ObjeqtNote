@@ -294,6 +294,20 @@ LRESULT CWindow::DynamicWindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM l
 			// 既定の処理へ向かう.
 			break;	// 抜けてDefWindowProcに向かう.
 
+		// ウィンドウの描画を要求された時.
+		case WM_PAINT:
+
+			// WM_PAINTブロック
+			{
+
+				// OnPaintに任せる.
+				OnPaint();	// OnPaintを呼ぶ.
+
+			}
+
+			// 既定の処理へ向かう.
+			break;	// 抜けてDefWindowProcに向かう.
+
 		// それ以外の時.
 		default:
 
@@ -335,5 +349,10 @@ BOOL CWindow::OnCommand(WPARAM wParam, LPARAM lParam){
 void CWindow::OnSize(UINT nType, int cx, int cy) {
 
 	// 特に何もしない.
+
+}
+
+// ウィンドウの描画を要求された時のハンドラOnPaint.
+void CWindow::OnPaint() {
 
 }

@@ -58,10 +58,16 @@ CCustomControl::CCustomControl() : CWindow() {
 }
 
 // ウィンドウ作成関数Create
-BOOL CCustomControl::Create(LPCTSTR lpctszClassName, LPCTSTR lpctszWindowName, DWORD dwStyle, int x, int y, int iWidth, int iHeight, HWND hWndParent, HMENU hMenu, HINSTANCE hInstance){
+BOOL CCustomControl::Create(LPCTSTR lpctszClassName, LPCTSTR lpctszWindowName, DWORD dwStyle, int x, int y, int iWidth, int iHeight, HWND hWndParent, HMENU hMenu, HINSTANCE hInstance) {
+
+	// ウィンドウの位置・サイズをセット.
+	m_x = x;				// m_xにxを代入.
+	m_y = y;				// m_yにyを代入.
+	m_iWidth = iWidth;		// m_iWidthにiWidthを代入.
+	m_iHeight = iHeight;	// m_iHeight = iHeightを代入.
 
 	// ウィンドウの作成.
-	m_hWnd = CreateWindow(lpctszClassName, lpctszWindowName, dwStyle | WS_CHILD | WS_VISIBLE, x, y, iWidth, iHeight, hWndParent, hMenu, hInstance, this);	// CreateWindowで指定された引数を使ってウィンドウを作成.(lpctszClassNameはOS既定のウィンドウクラス, dwStyleにWS_CHILDとWS_VISIBLEを追加.)
+	m_hWnd = CreateWindow(lpctszClassName, lpctszWindowName, dwStyle | WS_CHILD | WS_VISIBLE, m_x, m_y, m_iWidth, m_iHeight, hWndParent, hMenu, hInstance, this);	// CreateWindowで指定された引数を使ってウィンドウを作成.(lpctszClassNameはOS既定のウィンドウクラス, dwStyleにWS_CHILDとWS_VISIBLEを追加.)
 	if (m_hWnd == NULL) {	// m_hWndがNULLなら失敗.
 
 		// 失敗ならFALSE.
@@ -163,6 +169,20 @@ LRESULT CCustomControl::DynamicWindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, L
 
 				// OnSizeに任せる.
 				OnSize(nType, cx, cy);	// OnSizeにnType, cx, cyを渡す.
+
+			}
+
+			// 既定の処理へ向かう.
+			break;	// 抜けてDefWindowProcに向かう.
+
+		// ウィンドウの描画を要求された時.
+		case WM_PAINT:
+
+			// WM_PAINTブロック
+			{
+
+				// OnPaintに任せる.
+				OnPaint();	// OnPaintを呼ぶ.
 
 			}
 

@@ -58,7 +58,7 @@ int CMainWindow::OnCreate(HWND hwnd, LPCREATESTRUCT lpCreateStruct) {
 
 	// ピクチャーボックスの作成.
 	m_pPictureBox = new CPictureBox();	// CPictureBoxオブジェクトを作成し, ポインタをm_pPictureBoxに格納.
-	m_pPictureBox->Create(_T(""), SS_BITMAP | WS_HSCROLL | WS_VSCROLL, 50, 50, 320, 240, hwnd, (HMENU)IDC_PICTUREBOX1, lpCreateStruct->hInstance);	// m_pPictureBox->Createでピクチャーボックスを作成.
+	m_pPictureBox->Create(_T(""), SS_BITMAP | SS_REALSIZECONTROL | WS_HSCROLL | WS_VSCROLL, 50, 50, 320, 240, hwnd, (HMENU)IDC_PICTUREBOX1, lpCreateStruct->hInstance);	// m_pPictureBox->Createでピクチャーボックスを作成.(SS_REALSIZECONTROLでコントロールサイズは変化しない.)
 
 	// 成功.
 	return 0;	// 成功なので0を返す.
