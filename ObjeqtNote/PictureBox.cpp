@@ -226,4 +226,81 @@ void CPictureBox::OnHScroll(UINT nSBCode, UINT nPos) {
 // 垂直方向スクロールバーイベント時のハンドラOnVScroll.
 void CPictureBox::OnVScroll(UINT nSBCode, UINT nPos) {
 
+	// スクロール情報取得.
+	GetScrollInfo(m_hWnd, SB_VERT, &m_ScrollInfo);
+	m_ScrollInfo.fMask = SIF_POS;	// 位置だけ変更モード(これがないと, スクロールバーが元の位置に戻ってしまうので注意!)
+
+	// スクロールバー処理.
+	switch (nSBCode) {	// nSBCodeごとに振り分け.
+
+		// 一番上
+		case SB_TOP:
+
+			// 位置を最小値に.
+			m_ScrollInfo.nPos = m_ScrollInfo.nMin;
+			break;
+
+		// 一番下
+		case SB_BOTTOM:
+
+			// 位置を最大値に.
+			m_ScrollInfo.nPos = m_ScrollInfo.nMax;
+			break;
+
+		// 1行上
+		case SB_LINEUP:
+
+			// nPosが0でなければデクリメント.
+			if (m_ScrollInfo.nPos > 0) {
+				m_ScrollInfo.nPos--;
+			}
+			break;
+
+		// 1行下
+		case SB_LINEDOWN:
+
+			// nPosが最大値-1でなければインクリメント.
+			if (m_ScrollInfo.nPos < m_ScrollInfo.nMax - 1) {
+				m_ScrollInfo.nPos++;
+			}
+			break;
+
+		// 1ページ上
+		case SB_PAGEUP:
+
+			// nPage分減らす.
+			m_ScrollInfo.nPos -= m_ScrollInfo.nPage;
+			break;
+
+		// 1ページ下
+		case SB_PAGEDOWN:
+
+			// nPage分増やす.
+			m_ScrollInfo.nPos += m_ScrollInfo.nPage;
+			break;
+
+		// つまみをドラッグ中.
+		case SB_THUMBTRACK:
+
+			// 引数のnPosをセット
+			m_ScrollInfo.nPos = nPos;
+			break;
+
+		// つまみをドラッグ後.
+		case SB_THUMBPOSITION:
+
+			// 引数のnPosをセット
+			m_ScrollInfo.nPos = nPos;
+			break;
+
+		// それ以外.
+		default:
+
+			break;
+
+	}
+
+	// スクロール情報設定.
+	SetScrollInfo(m_hWnd, SB_VERT, &m_ScrollInfo, TRUE);
+
 }
