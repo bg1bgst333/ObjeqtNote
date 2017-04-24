@@ -189,6 +189,40 @@ LRESULT CCustomControl::DynamicWindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, L
 			// 既定の処理へ向かう.
 			break;	// 抜けてDefWindowProcに向かう.
 
+		// これらのメッセージはDefWindowProcに投げないと, スクロールバーが認識せず動作しない.
+		case WM_NCHITTEST:
+		case WM_NCLBUTTONDOWN:
+		case WM_NCLBUTTONUP:
+			return DefWindowProc(hwnd, uMsg, wParam, lParam);
+
+		// 水平方向スクロールバーイベント時.
+		case WM_HSCROLL:
+
+			// WM_HSCROLLブロック
+			{
+				
+				// OnHScrollに任せる.
+				OnHScroll(LOWORD(wParam), HIWORD(wParam));	// OnHScrollに任せる.
+	
+			}
+
+			// 既定の処理へ向かう.
+			break;	// 抜けてDefWindowProcに向かう.
+
+		// 垂直方向スクロールバーイベント時.
+		case WM_VSCROLL:
+
+			// WM_VSCROLLブロック
+			{
+
+				// OnVScrollに任せる.
+				OnVScroll(LOWORD(wParam), HIWORD(wParam));	// OnVScrollに任せる.
+
+			}
+
+			// 既定の処理へ向かう.
+			break;	// 抜けてDefWindowProcに向かう.
+
 		// それ以外の時.
 		default:
 

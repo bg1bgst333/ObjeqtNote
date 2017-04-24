@@ -44,8 +44,9 @@ BOOL CPictureBox::Create(LPCTSTR lpctszWindowName, DWORD dwStyle, int x, int y, 
 // 画像をロードする関数Load.
 BOOL CPictureBox::Load(LPCTSTR lpctszFileName, int iWidth, int iHeight) {
 
-	// 変数の宣言.
+	// 変数の宣言・初期化.
 	HINSTANCE hInstance;	// アプリケーションインスタンスハンドルhInstance.
+	BITMAP bitmap = { 0 };	// BITMAP構造体変数bitmap.
 
 	// 幅と高さをメンバにセット.
 	m_iPictureWidth = iWidth;	// m_iPictureWidthにiWidthをセット.
@@ -62,6 +63,11 @@ BOOL CPictureBox::Load(LPCTSTR lpctszFileName, int iWidth, int iHeight) {
 		return FALSE;	// 失敗なのでFALSEを返す.
 
 	}
+
+	// 画像から幅と高さを取得.
+	GetObject(m_hBitmap, sizeof(BITMAP), &bitmap);	// GetObjectでビットマップ情報を取得.
+	m_iPictureWidth = bitmap.bmWidth;	// m_iPictureWidthにbitmap.bmWidthをセット.
+	m_iPictureHeight = bitmap.bmHeight;	// m_iPictureHeightにbitmap.bmHeightをセット.
 
 	// 成功.
 	return TRUE;	// 成功なのでTRUEを返す.
@@ -112,7 +118,112 @@ void CPictureBox::OnPaint() {
 	// 古いビットマップを再選択して戻す.
 	SelectObject(m_hMemDC, hOld);	// SelectObjectでhOldを選択.
 
+	// スクロールバー設定.
+	// 横
+	ZeroMemory(&m_ScrollInfo, sizeof(SCROLLINFO));
+	m_ScrollInfo.cbSize = sizeof(SCROLLINFO);	// サイズをセット.
+	m_ScrollInfo.fMask = SIF_PAGE | SIF_RANGE;	// フラグをセット.
+	m_ScrollInfo.nPage = m_iWidth;	// 幅をセット.
+	m_ScrollInfo.nMin = 0;	// 最小値をセット.
+	m_ScrollInfo.nMax = m_iPictureWidth;	// 最大値をセット.
+	SetScrollInfo(m_hWnd, SB_HORZ, &m_ScrollInfo, FALSE);	// SetScrollInfoでセット.
+	// 縦
+	ZeroMemory(&m_ScrollInfo, sizeof(SCROLLINFO));
+	m_ScrollInfo.cbSize = sizeof(SCROLLINFO);	// サイズをセット.
+	m_ScrollInfo.fMask = SIF_PAGE | SIF_RANGE;	// フラグをセット.
+	m_ScrollInfo.nPage = m_iHeight;	// 高さをセット.
+	m_ScrollInfo.nMin = 0;	// 最小値をセット.
+	m_ScrollInfo.nMax = m_iPictureHeight;	// 最大値をセット.
+	SetScrollInfo(m_hWnd, SB_VERT, &m_ScrollInfo, FALSE);	// SetScrollInfoでセット.
+
 	// 描画終了.
 	EndPaint(m_hWnd, &ps);	// EndPaintで描画終了.
+
+}
+
+// 水平方向スクロールバーイベント時のハンドラOnHScroll.
+void CPictureBox::OnHScroll(UINT nSBCode, UINT nPos) {
+
+	// スクロール情報取得.
+	GetScrollInfo(m_hWnd, SB_HORZ, &m_ScrollInfo);
+	m_ScrollInfo.fMask = SIF_POS;	// 位置だけ変更モード(これがないと, スクロールバーが元の位置に戻ってしまうので注意!)
+
+	// スクロールバー処理.
+	switch (nSBCode) {	// nSBCodeごとに振り分け.
+
+		// 一番左
+		case SB_LEFT:
+
+			// 位置を最小値に.
+			m_ScrollInfo.nPos = m_ScrollInfo.nMin;
+			break;
+
+		// 一番右
+		case SB_RIGHT:
+
+			// 位置を最大値に.
+			m_ScrollInfo.nPos = m_ScrollInfo.nMax;
+			break;
+
+		// 1列左
+		case SB_LINELEFT:
+
+			// nPosが0でなければデクリメント.
+			if (m_ScrollInfo.nPos > 0) {
+				m_ScrollInfo.nPos--;
+			}
+			break;
+
+		// 1列右
+		case SB_LINERIGHT:
+
+			// nPosが最大値-1でなければインクリメント.
+			if (m_ScrollInfo.nPos < m_ScrollInfo.nMax - 1) {
+				m_ScrollInfo.nPos++;
+			}
+			break;
+
+		// 1ページ左
+		case SB_PAGELEFT:
+
+			// nPage分減らす.
+			m_ScrollInfo.nPos -= m_ScrollInfo.nPage;
+			break;
+
+		// 1ページ右
+		case SB_PAGERIGHT:
+
+			// nPage分増やす.
+			m_ScrollInfo.nPos += m_ScrollInfo.nPage;
+			break;
+
+		// つまみをドラッグ中.
+		case SB_THUMBTRACK:
+
+			// 引数のnPosをセット
+			m_ScrollInfo.nPos = nPos;
+			break;
+
+		// つまみをドラッグ後.
+		case SB_THUMBPOSITION:
+	
+			// 引数のnPosをセット
+			m_ScrollInfo.nPos = nPos;
+			break;
+
+		// それ以外.
+		default:
+
+			break;
+
+	}
+
+	// スクロール情報設定.
+	SetScrollInfo(m_hWnd, SB_HORZ, &m_ScrollInfo, TRUE);
+
+}
+
+// 垂直方向スクロールバーイベント時のハンドラOnVScroll.
+void CPictureBox::OnVScroll(UINT nSBCode, UINT nPos) {
 
 }
