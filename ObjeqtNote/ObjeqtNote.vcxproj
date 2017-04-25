@@ -165,6 +165,7 @@
     <ClCompile Include="TextFile.cpp" />
     <ClCompile Include="UserControl.cpp" />
     <ClCompile Include="Window.cpp" />
+    <ClCompile Include="WindowListControl.cpp" />
     <ClCompile Include="WinMain.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -186,6 +187,7 @@
     <ClInclude Include="TextFile.h" />
     <ClInclude Include="UserControl.h" />
     <ClInclude Include="Window.h" />
+    <ClInclude Include="WindowListControl.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="ObjeqtNote.rc" />

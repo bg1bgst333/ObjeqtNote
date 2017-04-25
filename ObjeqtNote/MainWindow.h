@@ -2,10 +2,11 @@
 #pragma once	// #pragma onceで二重インクルード防止.
 
 // 独自のヘッダ
-#include "StandardWindow.h"	// スタンダードウィンドウクラス
-#include "EditBox.h"		// エディットボックスクラス
-#include "PictureBox.h"		// ピクチャーボックスクラス
-#include "UserControl.h"	// ユーザコントロールクラス
+#include "StandardWindow.h"		// スタンダードウィンドウクラス
+#include "EditBox.h"			// エディットボックスクラス
+#include "PictureBox.h"			// ピクチャーボックスクラス
+#include "UserControl.h"		// ユーザコントロールクラス
+#include "WindowListControl.h"	// ウィンドウリストコントロールクラス
 #include "resource.h"			// リソース
 
 // メインウィンドウクラスCMainWindow
@@ -15,9 +16,10 @@ class CMainWindow : public CStandardWindow {
 	public:
 
 		// publicメンバ変数
-		CUserControl *m_pUserControl;		// CUserControl *型ユーザコントロールオブジェクトポインタm_pUserControl
-		CEditBox *m_pEditBox;				// CEditBox *型エディットボックスオブジェクトポインタm_pEditBox
-		CPictureBox *m_pPictureBox;			// CPictureBox *型ピクチャーボックスオブジェクトポインタm_pPictureBox
+		CUserControl *m_pUserControl;				// CUserControl *型ユーザコントロールオブジェクトポインタm_pUserControl
+		CEditBox *m_pEditBox;						// CEditBox *型エディットボックスオブジェクトポインタm_pEditBox
+		CPictureBox *m_pPictureBox;					// CPictureBox *型ピクチャーボックスオブジェクトポインタm_pPictureBox
+		CWindowListControl *m_pWindowListControl;	// CWindowListControl *型ウィンドウリストコントロールオブジェクトポインタm_pWindowListControl
 
 		// publicメンバ関数
 		// staticメンバ関数
