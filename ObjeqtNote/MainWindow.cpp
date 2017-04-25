@@ -28,10 +28,7 @@ CMainWindow::CMainWindow() : CStandardWindow() {
 CMainWindow::~CMainWindow() {
 
 	// メンバの終了処理.
-	if (m_pWindowListControl != NULL) {
-		delete m_pWindowListControl;	// deleteでm_pWindowListControlを解放.
-		m_pWindowListControl = NULL;	// m_pWindowListControlをNULLで埋める.
-	}
+	Destroy();	// Destroyで破棄.
 	if (m_pPictureBox != NULL) {
 		delete m_pPictureBox;		// deleteでm_pPictureBoxを解放.
 		m_pPictureBox = NULL;		// m_pPictureBoxをNULLで埋める.
@@ -55,6 +52,21 @@ BOOL CMainWindow::Create(LPCTSTR lpctszWindowName, DWORD dwStyle, int x, int y, 
 
 }
 
+// ウィンドウ破棄関数Destroy
+void CMainWindow::Destroy() {
+
+	// 子ウィンドウの破棄.
+	if (m_pWindowListControl != NULL) {
+		m_pWindowListControl->Destroy();	// m_pWindowListControlのウィンドウを破棄.
+		delete m_pWindowListControl;		// m_pWindowListControlを解放.
+		m_pWindowListControl = NULL;		// m_pWindowListControlをNULLで埋める.
+	}
+
+	// 自分のウィンドウも破棄.
+	CWindow::Destroy();	// CWindow::Destroyで自身のウィンドウも破棄.
+
+}
+
 // ウィンドウ作成時のハンドラOnCreate.
 int CMainWindow::OnCreate(HWND hwnd, LPCREATESTRUCT lpCreateStruct) {
 
@@ -63,7 +75,7 @@ int CMainWindow::OnCreate(HWND hwnd, LPCREATESTRUCT lpCreateStruct) {
 
 	// ウィンドウリストコントロールの作成.
 	m_pWindowListControl = new CWindowListControl();	// // CWindowListControlオブジェクトを作成し, ポインタをm_pWindowListControlに格納.
-	m_pWindowListControl->Create(_T(""), WS_BORDER, 50, 50, 400, 300, hwnd, (HMENU)IDC_WINDOWLISTCONTROL1, lpCreateStruct->hInstance);	// m_pWindowListControl->Createでウィンドウリストコントロールを作成.(この時点では, まだWS_BORDERを付けている.)
+	m_pWindowListControl->Create(_T(""), 0, 50, 50, 400, 300, hwnd, (HMENU)IDC_WINDOWLISTCONTROL1, lpCreateStruct->hInstance);	// m_pWindowListControl->Createでウィンドウリストコントロールを作成.(この時点では, まだWS_BORDERを付けている.)
 
 	// 成功.
 	return 0;	// 成功なので0を返す.

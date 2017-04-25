@@ -45,6 +45,7 @@ class CWindow {
 		// メンバ関数
 		virtual BOOL Create(LPCTSTR lpctszClassName, LPCTSTR lpctszWindowName, DWORD dwStyle, int x, int y, int iWidth, int iHeight, HWND hWndParent, HMENU hMenu, HINSTANCE hInstance);	// ウィンドウ作成関数Create
 		virtual BOOL Create(LPCTSTR lpctszWindowName, DWORD dwStyle, int x, int y, int iWidth, int iHeight, HWND hWndParent, HMENU hMenu, HINSTANCE hInstance);	// ウィンドウ作成関数Create(lpctszClassName省略)
+		virtual void Destroy();	// ウィンドウ破棄関数Destroy
 		virtual BOOL ShowWindow(int nCmdShow);	// ウィンドウ表示関数ShowWindow
 		virtual BOOL MoveWindow(int x, int y, int iWidth, int iHeight);	// 位置とサイズを変更する関数MoveWindow.
 		virtual int GetWindowTextLength();	// ウィンドウ名の長さ取得関数GetWindowTextLength.
@@ -57,5 +58,6 @@ class CWindow {
 		virtual void OnPaint();	// ウィンドウの描画を要求された時のハンドラOnPaint.
 		virtual void OnHScroll(UINT nSBCode, UINT nPos);	// 水平方向スクロールバーイベント時のハンドラOnHScroll.
 		virtual void OnVScroll(UINT nSBCode, UINT nPos);	// 垂直方向スクロールバーイベント時のハンドラOnVScroll.
+		virtual int OnClose();	// ウィンドウを閉じる時のハンドラOnClose.
 
 };

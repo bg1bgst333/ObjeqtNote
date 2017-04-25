@@ -24,10 +24,7 @@ CWindow::CWindow(){
 CWindow::~CWindow() {
 
 	// メンバ変数の終了処理
-	if (m_hWnd != NULL) {	// m_hWndがNULLでなければ.
-		DestroyWindow(m_hWnd);	// m_hWndを破棄.
-		m_hWnd = NULL;	// m_hWndにNULLを代入.
-	}
+	Destroy();		// Destroyでウィンドウを破棄.
 	m_x = 0;		// m_xに0を代入.
 	m_y = 0;		// m_yに0を代入.
 	m_iWidth = 0;	// m_iWidthに0を代入.
@@ -191,6 +188,17 @@ BOOL CWindow::Create(LPCTSTR lpctszWindowName, DWORD dwStyle, int x, int y, int 
 	
 }
 
+// ウィンドウ破棄関数Destroy
+void CWindow::Destroy() {
+
+	// メンバ変数の終了処理
+	if (m_hWnd != NULL) {	// m_hWndがNULLでなければ.
+		DestroyWindow(m_hWnd);	// m_hWndを破棄.
+		m_hWnd = NULL;	// m_hWndにNULLを代入.
+	}
+
+}
+
 // ウィンドウ表示関数ShowWindow
 BOOL CWindow::ShowWindow(int nCmdShow){
 
@@ -336,6 +344,22 @@ LRESULT CWindow::DynamicWindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM l
 			// 既定の処理へ向かう.
 			break;	// 抜けてDefWindowProcに向かう.
 
+		// ウィンドウを閉じた時.
+		case WM_CLOSE:
+
+			// WM_CLOSEブロック
+			{
+
+				// OnCloseに任せる.
+				if (OnClose() != 0) {	// 0以外なら
+					return 0;	// 0を返す.
+				}
+
+			}
+
+			// 既定の処理へ向かう.
+			break;	// 抜けてDefWindowProcに向かう.
+
 		// それ以外の時.
 		default:
 
@@ -392,5 +416,16 @@ void CWindow::OnHScroll(UINT nSBCode, UINT nPos) {
 
 // 垂直方向スクロールバーイベント時のハンドラOnVScroll.
 void CWindow::OnVScroll(UINT nSBCode, UINT nPos) {
+
+}
+
+// ウィンドウを閉じる時のハンドラOnClose.
+int CWindow::OnClose() {
+
+	// このウィンドウを破棄.
+	Destroy();	// Destroyでこのウィンドウを破棄.
+
+	// 0を返す.
+	return 0;	// 0を返してウィンドウを閉じる.
 
 }
