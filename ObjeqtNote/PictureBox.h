@@ -19,8 +19,8 @@ class CPictureBox : public CCustomControl {
 		SCROLLINFO m_ScrollInfo;	// スクロール情報m_ScrollInfo.
 		int m_iPictureWidth;	// 画像の幅int型m_iPictureWidth.
 		int m_iPictureHeight;	// 画像の高さint型m_iPictureHeight.
-		int m_iHScrollRange;	// スクロールバーの水平方向のレンジint型m_iHScrollRange.
-		int m_iVScrollRange;	// スクロールバーの垂直方向のレンジint型m_iVScrollRange.
+		//int m_iHScrollRange;	// スクロールバーの水平方向のレンジint型m_iHScrollRange.
+		//int m_iVScrollRange;	// スクロールバーの垂直方向のレンジint型m_iVScrollRange.
 		int m_iHScrollPos;		// スクロールバーの水平方向の位置int型m_iHScrollPos.
 		int m_iVScrollPos;		// スクロールバーの垂直方向の位置int型m_iVScrollPos.
 

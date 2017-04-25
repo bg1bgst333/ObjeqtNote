@@ -89,6 +89,10 @@ void CPictureBox::SetImage() {
 	// 画像をセットする.
 	SendMessage(m_hWnd, STM_SETIMAGE, IMAGE_BITMAP, (LPARAM)m_hBitmap);	// SendMessageでSTM_SETIMAGEを送信することでm_hBitmapをセットする.
 
+	// スクロールバーの位置(メンバ)の初期化.
+	m_iHScrollPos = 0;
+	m_iVScrollPos = 0;
+
 	// デバイスコンテキストの解放.
 	ReleaseDC(m_hWnd, hDC);	// ReleaseDCでデバイスコンテキスト解放.
 
@@ -113,9 +117,7 @@ void CPictureBox::OnPaint() {
 	// ビット転送による描画.
 	iDrawWidth = m_iWidth - SCROLLBAR_THICKNESS;	// 実際にはコントロール幅 - スクロールバーの厚さ.
 	iDrawHeight = m_iHeight - SCROLLBAR_THICKNESS;	// 実際にはコントロール高さ - スクロールバーの厚さ.
-	//BitBlt(hDC, 0, m_iHeight - m_ScrollInfo.nPos, iDrawWidth, m_ScrollInfo.nPos, m_hMemDC, 0, 0, SRCCOPY);	// BitBltでm_hMemDCからhDCにビット転送することで描画される.
-	BitBlt(hDC, 0, 0, iDrawWidth, iDrawHeight, m_hMemDC, 0, 0, SRCCOPY);
-	BitBlt(hDC, 0, iDrawHeight - m_ScrollInfo.nPos, iDrawWidth, m_ScrollInfo.nPos, m_hMemDC, 0, iDrawHeight, SRCCOPY);
+	BitBlt(hDC, 0, 0, iDrawWidth, iDrawHeight, m_hMemDC, m_iHScrollPos, m_iVScrollPos, SRCCOPY);	// BitBltでm_hMemDCからhDCにビット転送することで描画される.
 
 	// 古いビットマップを再選択して戻す.
 	SelectObject(m_hMemDC, hOld);	// SelectObjectでhOldを選択.
@@ -125,7 +127,7 @@ void CPictureBox::OnPaint() {
 	ZeroMemory(&m_ScrollInfo, sizeof(SCROLLINFO));
 	m_ScrollInfo.cbSize = sizeof(SCROLLINFO);	// サイズをセット.
 	m_ScrollInfo.fMask = SIF_PAGE | SIF_RANGE;	// フラグをセット.
-	m_ScrollInfo.nPage = m_iWidth;	// 幅をセット.
+	m_ScrollInfo.nPage = iDrawWidth;	// 幅をセット.
 	m_ScrollInfo.nMin = 0;	// 最小値をセット.
 	m_ScrollInfo.nMax = m_iPictureWidth;	// 最大値をセット.
 	SetScrollInfo(m_hWnd, SB_HORZ, &m_ScrollInfo, FALSE);	// SetScrollInfoでセット.
@@ -133,7 +135,7 @@ void CPictureBox::OnPaint() {
 	ZeroMemory(&m_ScrollInfo, sizeof(SCROLLINFO));
 	m_ScrollInfo.cbSize = sizeof(SCROLLINFO);	// サイズをセット.
 	m_ScrollInfo.fMask = SIF_PAGE | SIF_RANGE;	// フラグをセット.
-	m_ScrollInfo.nPage = m_iHeight;	// 高さをセット.
+	m_ScrollInfo.nPage = iDrawHeight;	// 高さをセット.
 	m_ScrollInfo.nMin = 0;	// 最小値をセット.
 	m_ScrollInfo.nMax = m_iPictureHeight;	// 最大値をセット.
 	SetScrollInfo(m_hWnd, SB_VERT, &m_ScrollInfo, FALSE);	// SetScrollInfoでセット.
@@ -147,8 +149,8 @@ void CPictureBox::OnPaint() {
 void CPictureBox::OnHScroll(UINT nSBCode, UINT nPos) {
 
 	// スクロール情報取得.
-	GetScrollInfo(m_hWnd, SB_HORZ, &m_ScrollInfo);
-	m_ScrollInfo.fMask = SIF_POS;	// 位置だけ変更モード(これがないと, スクロールバーが元の位置に戻ってしまうので注意!)
+	m_ScrollInfo.fMask = SIF_POS;	// 位置だけ変更モード(これがないと, スクロールバーが元の位置に戻ってしまうので注意!こっちが前!)
+	GetScrollInfo(m_hWnd, SB_HORZ, &m_ScrollInfo);	// マスクを設定してからGetScrollInfo.(こっちが後!)
 
 	// スクロールバー処理.
 	switch (nSBCode) {	// nSBCodeごとに振り分け.
@@ -222,6 +224,10 @@ void CPictureBox::OnHScroll(UINT nSBCode, UINT nPos) {
 
 	// スクロール情報設定.
 	SetScrollInfo(m_hWnd, SB_HORZ, &m_ScrollInfo, TRUE);
+	// メンバにもセット.
+	m_iHScrollPos = m_ScrollInfo.nPos;
+	// 無効領域を作成して画面の更新.
+	InvalidateRect(m_hWnd, NULL, TRUE);	// InvalidateRectで無効領域作成.
 
 }
 
@@ -231,7 +237,6 @@ void CPictureBox::OnVScroll(UINT nSBCode, UINT nPos) {
 	// スクロール情報取得.
 	m_ScrollInfo.fMask = SIF_POS;	// 位置だけ変更モード(これがないと, スクロールバーが元の位置に戻ってしまうので注意!こっちが前!)
 	GetScrollInfo(m_hWnd, SB_VERT, &m_ScrollInfo);	// マスクを設定してからGetScrollInfo.(こっちが後!)
-	int dy = 0;	// 変化量dyを0に初期化,
 
 	// スクロールバー処理.
 	switch (nSBCode) {	// nSBCodeごとに振り分け.
@@ -257,17 +262,15 @@ void CPictureBox::OnVScroll(UINT nSBCode, UINT nPos) {
 			if (m_ScrollInfo.nPos > 0) {
 				m_ScrollInfo.nPos--;
 			}
-			dy = -1;
 			break;
 
 		// 1行下
 		case SB_LINEDOWN:
-	
+
 			// nPosが最大値-1でなければインクリメント.
 			if (m_ScrollInfo.nPos < m_ScrollInfo.nMax - 1) {
 				m_ScrollInfo.nPos++;
 			}
-			dy = 1;
 			break;
 
 		// 1ページ上
@@ -275,7 +278,6 @@ void CPictureBox::OnVScroll(UINT nSBCode, UINT nPos) {
 
 			// nPage分減らす.
 			m_ScrollInfo.nPos -= m_ScrollInfo.nPage;
-			dy = -1 * m_ScrollInfo.nPage;
 			break;
 
 		// 1ページ下
@@ -283,14 +285,12 @@ void CPictureBox::OnVScroll(UINT nSBCode, UINT nPos) {
 
 			// nPage分増やす.
 			m_ScrollInfo.nPos += m_ScrollInfo.nPage;
-			dy = 1 * m_ScrollInfo.nPage;
 			break;
 
 		// つまみをドラッグ中.
 		case SB_THUMBTRACK:
 
 			// 引数のnPosをセット
-			dy = nPos - m_ScrollInfo.nPos;
 			m_ScrollInfo.nPos = nPos;
 			break;
 
@@ -298,7 +298,6 @@ void CPictureBox::OnVScroll(UINT nSBCode, UINT nPos) {
 		case SB_THUMBPOSITION:
 
 			// 引数のnPosをセット
-			//dy = nPos - m_ScrollInfo.nPos;
 			m_ScrollInfo.nPos = nPos;
 			break;
 
@@ -311,14 +310,9 @@ void CPictureBox::OnVScroll(UINT nSBCode, UINT nPos) {
 
 	// スクロール情報設定.
 	SetScrollInfo(m_hWnd, SB_VERT, &m_ScrollInfo, TRUE);
-
-	// スクロール
-	RECT rc;	// クリッピングする矩形.
-	rc.left = 0;
-	rc.top = 0;
-	rc.right = m_iWidth;
-	rc.bottom = m_iHeight;
-	ScrollWindow(m_hWnd, 0, -dy, NULL, &rc);
-	//UpdateWindow(m_hWnd);
+	// メンバにもセット.
+	m_iVScrollPos = m_ScrollInfo.nPos;
+	// 無効領域を作成して画面の更新.
+	InvalidateRect(m_hWnd, NULL, TRUE);	// InvalidateRectで無効領域作成.
 
 }
