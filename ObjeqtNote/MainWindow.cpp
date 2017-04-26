@@ -77,6 +77,13 @@ int CMainWindow::OnCreate(HWND hwnd, LPCREATESTRUCT lpCreateStruct) {
 	m_pWindowListControl = new CWindowListControl();	// // CWindowListControlオブジェクトを作成し, ポインタをm_pWindowListControlに格納.
 	m_pWindowListControl->Create(_T(""), WS_HSCROLL | WS_VSCROLL, 50, 50, 400, 300, hwnd, (HMENU)IDC_WINDOWLISTCONTROL1, lpCreateStruct->hInstance);	// m_pWindowListControl->Createでウィンドウリストコントロールを作成.(この時点では, まだWS_BORDERを付けている.)
 
+	// 最初のウィンドウリストアイテムを挿入.
+	m_pWindowListControl->Insert(_T("0"), 0, 50, lpCreateStruct->hInstance);	// 0番目に高さ50のアイテムを挿入.
+	m_pWindowListControl->Insert(_T("1"), 1, 50, lpCreateStruct->hInstance);	// 1番目に高さ50のアイテムを挿入.
+	m_pWindowListControl->Insert(_T("2"), 0, 50, lpCreateStruct->hInstance);	// 0番目に高さ50のアイテムを挿入.
+	m_pWindowListControl->Insert(_T("3"), 1, 50, lpCreateStruct->hInstance);	// 1番目に高さ50のアイテムを挿入.
+	m_pWindowListControl->Insert(_T("4"), 0, 50, lpCreateStruct->hInstance);	// 0番目に高さ50のアイテムを挿入.
+
 	// 成功.
 	return 0;	// 成功なので0を返す.
 

@@ -5,6 +5,9 @@
 // ウィンドウクラス登録関数RegisterClass
 BOOL CWindowListItemsPanel::RegisterClass(HINSTANCE hInstance) {
 
+	// ウィンドウリストアイテムを登録.
+	CWindowListItem::RegisterClass(hInstance);	// 子ウィンドウを登録.
+
 	// ユーザコントロールとして登録.
 	return CUserControl::RegisterClass(hInstance, _T("WindowListItemsPanel"));	// CUserControl::RegisterClassでウィンドウクラス"WindowListItemsPanel"を登録.
 
@@ -13,10 +16,16 @@ BOOL CWindowListItemsPanel::RegisterClass(HINSTANCE hInstance) {
 // コンストラクタCWindowListItemsPanel()
 CWindowListItemsPanel::CWindowListItemsPanel() : CUserControl() {
 
+	// メンバの初期化.
+	m_nId = 0;	// m_nIdを0に初期化.
 }
 
 // デストラクタ~CWindowListItemsPanel()
 CWindowListItemsPanel::~CWindowListItemsPanel() {
+
+	// メンバの終了処理.
+	Destroy();	// Destroyで破棄.
+	m_nId = 0;	// m_nIdを0にセット.
 
 }
 
@@ -31,12 +40,81 @@ BOOL CWindowListItemsPanel::Create(LPCTSTR lpctszWindowName, DWORD dwStyle, int 
 // ウィンドウ破棄関数Destroy
 void CWindowListItemsPanel::Destroy() {
 
-	// ペンとブラシの破棄.
-	DeleteObject(m_hBrush);	// ブラシの破棄.
-	DeleteObject(m_hPen);	// ペンの破棄.
+	// アイテムの一斉削除.
+	std::list<CWindowListItem *>::iterator itor = m_lstWindowList.begin();	// イテレータ.
+	while (itor != m_lstWindowList.end()) {
+		(*itor)->Destroy();
+		delete (*itor);
+		(*itor) = NULL;
+		itor++;
+	}
+	m_lstWindowList.clear();
 
+	// ペンとブラシの破棄.
+	if (m_hBrush) {
+		DeleteObject(m_hBrush);	// ブラシの破棄.
+		m_hBrush = NULL;
+	}
+	if (m_hPen) {
+		DeleteObject(m_hPen);	// ペンの破棄.
+		m_hPen = NULL;
+	}
 	// 自分のウィンドウも破棄.
 	CWindow::Destroy();	// CWindow::Destroyで自身のウィンドウも破棄.
+
+}
+
+// アイテム挿入関数Insert
+BOOL CWindowListItemsPanel::Insert(LPCTSTR lpctszWindowName, int iIndex, int iHeight, HINSTANCE hInstance) {
+
+	// 変数の宣言.
+	int iIdx;	// 値のチェック後のインデックスint型iIdx.
+	CWindowListItem *pItem;	// ウィンドウリストアイテムポインタpItem.
+
+	// インデックスの値で振り分け.
+	if (iIndex < 0) {	// 負の値
+		iIdx = 0;	// 0をセット.
+	}
+	else if (iIndex >(int)m_lstWindowList.size()) {	// サイズより大きい.
+		iIdx = m_lstWindowList.size();	// サイズをセット.
+	}
+	else {
+		iIdx = iIndex;	// iIndexをセット.
+	}
+	std::list<CWindowListItem *>::iterator itor = m_lstWindowList.begin();	// イテレータ.
+	int y = 0;
+	for (int i = 0; i < (int)m_lstWindowList.size() + 1; i++) {
+		if (i == iIdx) {
+			pItem = new CWindowListItem();	// 生成.
+			pItem->Create(lpctszWindowName, 0, 25, y, 200, iHeight, m_hWnd, (HMENU)(IDC_WINDOWLISTITEM_ID_START + m_nId), hInstance);	// ウィンドウ生成.
+			m_lstWindowList.insert(itor, pItem);	// 挿入.
+			m_nId++;
+			itor = m_lstWindowList.begin();
+			for (int j = 0; j < iIdx; j++) {
+				itor++;
+			}
+		}
+		else if (i < iIdx) {
+			y = y + (*itor)->m_iHeight;	// 位置計算.
+		}
+		else if (i > iIdx) {
+			if (itor != m_lstWindowList.end()) {
+				(*itor)->MoveWindow(false, 0, iHeight);	// iHeight分ずらす.
+			}
+			else {
+				break;
+			}
+		}
+		if (itor != m_lstWindowList.end()) {
+			itor++;
+		}
+		else {
+			break;
+		}
+	}
+
+	// とりあえず成功にしておく.
+	return TRUE;
 
 }
 

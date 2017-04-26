@@ -57,13 +57,10 @@ void CWindowListControl::Destroy() {
 }
 
 // アイテム挿入関数Insert
-BOOL CWindowListControl::Insert(int iIndex) {
+BOOL CWindowListControl::Insert(LPCTSTR lpctszWindowName, int iIndex, int iHeight, HINSTANCE hInstance) {
 
-	// アイテムズパネルのサイズを大きくする.
-	m_pWindowListItemsPanel->MoveWindow(TRUE, 0, 50);	// m_pWindowListItemsPanel->MoveWindowで相対的に50増やす.
-
-	// 成功なのでTRUEを返す.
-	return TRUE;
+	// アイテムズパネルのInsertを呼ぶ.
+	return m_pWindowListItemsPanel->Insert(lpctszWindowName, iIndex, iHeight, hInstance);	// m_pWindowListItemsPanel->Insertで挿入.
 
 }
 
@@ -76,7 +73,7 @@ int CWindowListControl::OnCreate(HWND hwnd, LPCREATESTRUCT lpCreateStruct) {
 
 	// ウィンドウリストアイテムズパネルクラスの作成.
 	m_pWindowListItemsPanel = new CWindowListItemsPanel();	// CWindowListItemsPanelオブジェクトを作成し, ポインタをm_pWindowListItemsPanelに格納.
-	m_pWindowListItemsPanel->Create(_T(""), 0, 30, 0, 300, 50, hwnd, (HMENU)IDC_WINDOWLISTITEMSPANEL1, lpCreateStruct->hInstance);	// m_pWindowListItemsPanel->Createでウィンドウリストアイテムズパネルを作成.(親ウィンドウより小さめ.)
+	m_pWindowListItemsPanel->Create(_T(""), 0, 30, 0, 300, 300, hwnd, (HMENU)IDC_WINDOWLISTITEMSPANEL1, lpCreateStruct->hInstance);	// m_pWindowListItemsPanel->Createでウィンドウリストアイテムズパネルを作成.(親ウィンドウより小さめ.)
 
 	// 成功なので0を返す.
 	return 0;

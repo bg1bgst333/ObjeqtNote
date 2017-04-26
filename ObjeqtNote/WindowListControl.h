@@ -29,7 +29,7 @@ class CWindowListControl : public CUserControl {
 		// メンバ関数
 		virtual BOOL Create(LPCTSTR lpctszWindowName, DWORD dwStyle, int x, int y, int iWidth, int iHeight, HWND hWndParent, HMENU hMenu, HINSTANCE hInstance);	// ウィンドウ作成関数Create
 		virtual void Destroy();	// ウィンドウ破棄関数Destroy
-		virtual BOOL Insert(int iIndex);	// アイテム挿入関数Insert
+		virtual BOOL Insert(LPCTSTR lpctszWindowName, int iIndex, int iHeight, HINSTANCE hInstance);	// アイテム挿入関数Insert
 		virtual int OnCreate(HWND hwnd, LPCREATESTRUCT lpCreateStruct);	// ウィンドウ作成時のハンドラOnCreate.
 		virtual void OnPaint();	// ウィンドウの描画を要求された時のハンドラOnPaint.
 		virtual void OnHScroll(UINT nSBCode, UINT nPos);	// 水平方向スクロールバーイベント時のハンドラOnHScroll.
