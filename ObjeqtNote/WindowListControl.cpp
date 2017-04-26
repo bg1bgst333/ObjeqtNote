@@ -56,6 +56,17 @@ void CWindowListControl::Destroy() {
 
 }
 
+// アイテム挿入関数Insert
+BOOL CWindowListControl::Insert(int iIndex) {
+
+	// アイテムズパネルのサイズを大きくする.
+	m_pWindowListItemsPanel->MoveWindow(TRUE, 0, 50);	// m_pWindowListItemsPanel->MoveWindowで相対的に50増やす.
+
+	// 成功なのでTRUEを返す.
+	return TRUE;
+
+}
+
 // ウィンドウ作成時のハンドラOnCreate.
 int CWindowListControl::OnCreate(HWND hwnd, LPCREATESTRUCT lpCreateStruct) {
 

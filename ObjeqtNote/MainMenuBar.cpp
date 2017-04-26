@@ -21,6 +21,11 @@ void CMainMenuBar::OnFileOpen() {
 	CMainWindow *pMainWindow = dynamic_cast<CMainWindow *>(CWindow::m_mapWindowMap[m_hWnd]);	// CWindow::m_mapWindowMap[m_hWnd]でpMainWindowを取得.(途中dynamic_castしている.)
 	if (pMainWindow != NULL) {	// キャスト成功.
 
+		// ウィンドウリストコントロールの操作.
+		if (pMainWindow->m_pWindowListControl != NULL) {	// NULLでなければ.
+			pMainWindow->m_pWindowListControl->Insert(0);	// 適当にInsert.
+		}
+
 	}
 
 }

@@ -219,6 +219,22 @@ BOOL CWindow::MoveWindow(int x, int y, int iWidth, int iHeight) {
 
 }
 
+// 相対座標リサイズor移動関数MoveWindow.
+BOOL CWindow::MoveWindow(BOOL bResize, int iRelativeHorizontal, int iRelativeVertical) {
+
+	// リサイズか移動かを決定.
+	if (bResize) {	// リサイズ
+		m_iWidth = m_iWidth + iRelativeHorizontal;	// 幅の増加.
+		m_iHeight = m_iHeight + iRelativeVertical;	// 高さの増加.
+	}
+	else {	// 移動.
+		m_x = m_x + iRelativeHorizontal;	// 右に移動.
+		m_y = m_y + iRelativeVertical;		// 下に移動.
+	}
+	return ::MoveWindow(m_hWnd, m_x, m_y, m_iWidth, m_iHeight, TRUE);	// WindowsAPIのMoveWindowで位置とサイズを変更.
+
+}
+
 // ウィンドウ名の長さ取得関数GetWindowTextLength.
 int CWindow::GetWindowTextLength() {
 
