@@ -118,6 +118,62 @@ BOOL CWindowListItemsPanel::Insert(LPCTSTR lpctszWindowName, int iIndex, int iHe
 
 }
 
+// アイテム削除Remove
+BOOL CWindowListItemsPanel::Remove(int iIndex) {
+
+	// 変数の宣言.
+	int iIdx;		// 値のチェック後のインデックスint型iIdx.
+	int iHeight = 0;	// 削除されたアイテムの高さiHeightを0に初期化.
+
+	// インデックスの値で振り分け.
+	if (iIndex < 0) {	// 負の値
+		iIdx = 0;	// 0をセット.
+	}
+	else if (iIndex >(int)m_lstWindowList.size() - 1) {	// 最後尾より大きい.
+		iIdx = m_lstWindowList.size() - 1;	// 最後尾をセット.
+	}
+	else {
+		iIdx = iIndex;	// iIndexをセット.
+	}
+	std::list<CWindowListItem *>::iterator itor = m_lstWindowList.begin();	// イテレータ.
+	for (int i = 0; i < (int)m_lstWindowList.size(); i++) {
+		if (i == iIdx) {
+			iHeight = (*itor)->m_iHeight;	// 高さを保存.
+			(*itor)->Destroy();
+			delete (*itor);
+			m_lstWindowList.remove((*itor));
+			itor = m_lstWindowList.begin();
+			for (int j = 0; j < iIdx; j++) {
+				itor++;
+			}
+			if (itor != m_lstWindowList.end()) {
+				(*itor)->MoveWindow(false, 0, -iHeight);	// iHeight分ずらす.
+			}
+			else {
+				break;
+			}
+		}
+		else if (i > iIdx) {
+			if (itor != m_lstWindowList.end()) {
+				(*itor)->MoveWindow(false, 0, -iHeight);	// iHeight分ずらす.
+			}
+			else {
+				break;
+			}
+		}
+		if (itor != m_lstWindowList.end()) {
+			itor++;
+		}
+		else {
+			break;
+		}
+	}
+
+	// とりあえず成功にしておく.
+	return TRUE;
+
+}
+
 // ウィンドウ作成時のハンドラOnCreate.
 int CWindowListItemsPanel::OnCreate(HWND hwnd, LPCREATESTRUCT lpCreateStruct) {
 

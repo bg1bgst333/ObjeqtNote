@@ -268,3 +268,8 @@ LRESULT CCustomControl::DynamicWindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, L
 	}
 
 }
+
+// ウィンドウ破棄時のハンドラOnDestroy.
+void CCustomControl::OnDestroy() {
+
+}

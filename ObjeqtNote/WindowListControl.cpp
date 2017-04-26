@@ -64,6 +64,14 @@ BOOL CWindowListControl::Insert(LPCTSTR lpctszWindowName, int iIndex, int iHeigh
 
 }
 
+// アイテム削除Remove
+BOOL CWindowListControl::Remove(int iIndex) {
+
+	// アイテムズパネルのRemoveを呼ぶ.
+	return m_pWindowListItemsPanel->Remove(iIndex);	// m_pWindowListItemsPanel->Removeで削除.
+
+}
+
 // ウィンドウ作成時のハンドラOnCreate.
 int CWindowListControl::OnCreate(HWND hwnd, LPCREATESTRUCT lpCreateStruct) {
 
