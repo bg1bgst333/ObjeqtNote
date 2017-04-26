@@ -131,6 +131,7 @@ BOOL CWindowListItemsPanel::Remove(int iIndex) {
 	// 変数の宣言.
 	int iIdx;		// 値のチェック後のインデックスint型iIdx.
 	int iHeight = 0;	// 削除されたアイテムの高さiHeightを0に初期化.
+	int iTotalHeight = 0;	// パネル全体の高さiTotalHeightを0に初期化.
 
 	// インデックスの値で振り分け.
 	if (iIndex < 0) {	// 負の値
@@ -154,6 +155,7 @@ BOOL CWindowListItemsPanel::Remove(int iIndex) {
 				itor++;
 			}
 			if (itor != m_lstWindowList.end()) {
+				iTotalHeight = iTotalHeight + (*itor)->m_iHeight;
 				(*itor)->MoveWindow(false, 0, -iHeight);	// iHeight分ずらす.
 			}
 			else {
@@ -162,11 +164,15 @@ BOOL CWindowListItemsPanel::Remove(int iIndex) {
 		}
 		else if (i > iIdx) {
 			if (itor != m_lstWindowList.end()) {
+				iTotalHeight = iTotalHeight + (*itor)->m_iHeight;
 				(*itor)->MoveWindow(false, 0, -iHeight);	// iHeight分ずらす.
 			}
 			else {
 				break;
 			}
+		}
+		else {
+			iTotalHeight = iTotalHeight + (*itor)->m_iHeight;
 		}
 		if (itor != m_lstWindowList.end()) {
 			itor++;
@@ -175,6 +181,9 @@ BOOL CWindowListItemsPanel::Remove(int iIndex) {
 			break;
 		}
 	}
+
+	//アイテムズパネルの大きさを縮小する.
+	MoveWindow(3, iTotalHeight);	// 高さをiTotalHeightにする.
 
 	// とりあえず成功にしておく.
 	return TRUE;

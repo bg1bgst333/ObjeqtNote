@@ -30,11 +30,14 @@ void CMainMenuBar::OnFileOpen() {
 }
 
 // "名前を付けて保存"選択時の独自ハンドラOnFileSaveAs.
-void CMainMenuBar::OnFileSaveAs(){
+void CMainMenuBar::OnFileSaveAs() {
 
 	// メインウィンドウオブジェクトの取得
 	CMainWindow *pMainWindow = dynamic_cast<CMainWindow *>(CWindow::m_mapWindowMap[m_hWnd]);	// CWindow::m_mapWindowMap[m_hWnd]でpMainWindowを取得.(途中dynamic_castしている.)
 	if (pMainWindow != NULL) {	// キャスト成功.
+
+		// 削除.
+		pMainWindow->m_pWindowListControl->Remove(0);	// pMainWindow->m_pWindowListControl->Removeで0番目を削除.
 
 	}
 
