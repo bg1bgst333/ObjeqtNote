@@ -49,6 +49,7 @@ class CWindow {
 		virtual BOOL ShowWindow(int nCmdShow);	// ウィンドウ表示関数ShowWindow
 		virtual BOOL MoveWindow(int x, int y, int iWidth, int iHeight);	// 位置とサイズを変更する関数MoveWindow.
 		virtual BOOL MoveWindow(BOOL bResize, int iRelativeHorizontal, int iRelativeVertical);	// 相対座標リサイズor移動関数MoveWindow.
+		virtual BOOL MoveWindow(int xywh, int value);	// 絶対座標で指定(xywhのどれか.)の値だけ変更する関数MoveWindow.
 		virtual int GetWindowTextLength();	// ウィンドウ名の長さ取得関数GetWindowTextLength.
 		virtual int GetWindowText(LPTSTR lpszStringBuf, int nMaxCount);	// ウィンドウ名取得関数GetWindowText.
 		virtual LRESULT DynamicWindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);	// StaticWindowProcから各ウィンドウオブジェクトごとに呼び出されるサブウィンドウプロシージャDynamicWindowProc.

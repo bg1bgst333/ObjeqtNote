@@ -235,6 +235,26 @@ BOOL CWindow::MoveWindow(BOOL bResize, int iRelativeHorizontal, int iRelativeVer
 
 }
 
+// 絶対座標で指定(xywhのどれか.)の値だけ変更する関数MoveWindow.
+BOOL CWindow::MoveWindow(int xywh, int value) {
+
+	// xywhのどれかを決定.
+	if (xywh == 0) {	// x
+		m_x = value;
+	}
+	else if (xywh == 1) {	// y
+		m_y = value;
+	}
+	else if (xywh == 2) {	// w
+		m_iWidth = value;
+	}
+	else if (xywh == 3) {	// h
+		m_iHeight = value;
+	}
+	return ::MoveWindow(m_hWnd, m_x, m_y, m_iWidth, m_iHeight, TRUE);	// WindowsAPIのMoveWindowで位置とサイズを変更.
+
+}
+
 // ウィンドウ名の長さ取得関数GetWindowTextLength.
 int CWindow::GetWindowTextLength() {
 

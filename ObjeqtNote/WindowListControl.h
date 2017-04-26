@@ -16,6 +16,7 @@ class CWindowListControl : public CUserControl {
 		HPEN m_hPen;		// ペンHPEN型m_hPen.
 		HBRUSH m_hBrush;	// ブラシHBRUSH型m_hBrush.
 		CWindowListItemsPanel *m_pWindowListItemsPanel;	// CWindowListItemsPanel *型ウィンドウリストアイテムズパネルオブジェクトポインタm_pWindowListItemsPanel
+		SCROLLINFO m_ScrollInfo;	// スクロール情報m_ScrollInfo.
 
 		// publicメンバ関数
 		// staticメンバ関数
@@ -31,5 +32,7 @@ class CWindowListControl : public CUserControl {
 		virtual BOOL Insert(int iIndex);	// アイテム挿入関数Insert
 		virtual int OnCreate(HWND hwnd, LPCREATESTRUCT lpCreateStruct);	// ウィンドウ作成時のハンドラOnCreate.
 		virtual void OnPaint();	// ウィンドウの描画を要求された時のハンドラOnPaint.
+		virtual void OnHScroll(UINT nSBCode, UINT nPos);	// 水平方向スクロールバーイベント時のハンドラOnHScroll.
+		virtual void OnVScroll(UINT nSBCode, UINT nPos);	// 垂直方向スクロールバーイベント時のハンドラOnVScroll.
 
 };
