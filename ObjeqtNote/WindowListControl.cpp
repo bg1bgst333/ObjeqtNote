@@ -5,6 +5,9 @@
 // ウィンドウクラス登録関数RegisterClass
 BOOL CWindowListControl::RegisterClass(HINSTANCE hInstance) {
 
+	// ウィンドウリストアイテムズパネルを登録.
+	CWindowListItemsPanel::RegisterClass(hInstance);	// 子ウィンドウを登録.
+
 	// ユーザコントロールとして登録.
 	return CUserControl::RegisterClass(hInstance, _T("WindowListControl"));	// CUserControl::RegisterClassでウィンドウクラス"WindowListControl"を登録.
 
@@ -13,10 +16,16 @@ BOOL CWindowListControl::RegisterClass(HINSTANCE hInstance) {
 // コンストラクタCWindowListControl()
 CWindowListControl::CWindowListControl() : CUserControl() {
 
+	// メンバの初期化
+	m_pWindowListItemsPanel = NULL;	// m_pWindowListItemsPanelをNULLで初期化.
+
 }
 
 // デストラクタ~CWindowListControl()
 CWindowListControl::~CWindowListControl() {
+
+	// メンバの終了処理.
+	Destroy();	// Destroyで破棄.
 
 }
 
@@ -30,6 +39,13 @@ BOOL CWindowListControl::Create(LPCTSTR lpctszWindowName, DWORD dwStyle, int x, 
 
 // ウィンドウ破棄関数Destroy
 void CWindowListControl::Destroy() {
+
+	// 子ウィンドウの破棄.
+	if (m_pWindowListItemsPanel != NULL) {
+		m_pWindowListItemsPanel->Destroy();	// m_pWindowListItemsPanelのウィンドウを破棄.
+		delete m_pWindowListItemsPanel;		// m_pWindowListItemsPanelを解放.
+		m_pWindowListItemsPanel = NULL;		// m_pWindowListItemsPanelをNULLで埋める.
+	}
 
 	// ペンとブラシの破棄.
 	DeleteObject(m_hBrush);	// ブラシの破棄.
@@ -46,6 +62,10 @@ int CWindowListControl::OnCreate(HWND hwnd, LPCREATESTRUCT lpCreateStruct) {
 	// ペンとブラシの作成.
 	m_hPen = (HPEN)CreatePen(PS_SOLID, 1, RGB(0, 0x7f, 0));		// 緑(濃)のペンを作成.
 	m_hBrush = (HBRUSH)CreateSolidBrush(RGB(0, 0xff, 0));		// 緑(淡)のブラシを作成.
+
+	// ウィンドウリストアイテムズパネルクラスの作成.
+	m_pWindowListItemsPanel = new CWindowListItemsPanel();	// CWindowListItemsPanelオブジェクトを作成し, ポインタをm_pWindowListItemsPanelに格納.
+	m_pWindowListItemsPanel->Create(_T(""), 0, 30, 0, 300, 50, hwnd, (HMENU)IDC_WINDOWLISTITEMSPANEL1, lpCreateStruct->hInstance);	// m_pWindowListItemsPanel->Createでウィンドウリストアイテムズパネルを作成.(親ウィンドウより小さめ.)
 
 	// 成功なので0を返す.
 	return 0;
@@ -64,8 +84,10 @@ void CWindowListControl::OnPaint() {
 	// ペンとブラシの選択.
 	HPEN hOldPen = (HPEN)SelectObject(hDC, m_hPen);		// 緑のペンを選択.
 	HBRUSH hOldBrush = (HBRUSH)SelectObject(hDC, m_hBrush);	// 緑のブラシを選択.
-	// 矩形を描画.
-	Rectangle(hDC, 0, 0, m_iWidth, m_iHeight);
+	// 矩形を描画.(クライアント領域はスクロールバーを含まない.)
+	RECT rc;
+	GetClientRect(m_hWnd, &rc);	// GetClientRectでクライアント領域の矩形を取得.
+	Rectangle(hDC, 0, 0, rc.right - rc.left, rc.bottom - rc.top);	// Rectangleで矩形を描画.
 	// ペンとブラシの復元
 	SelectObject(hDC, hOldBrush);		// 古いブラシを選択.
 	SelectObject(hDC, hOldPen);		// 古いペンを選択.

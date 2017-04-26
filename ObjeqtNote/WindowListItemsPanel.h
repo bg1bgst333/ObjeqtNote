@@ -3,11 +3,9 @@
 
 // 独自のヘッダ
 #include "UserControl.h"	// ユーザコントロールクラス
-#include "WindowListItemsPanel.h"	// ウィンドウリストアイテムズパネルクラス
-#include "resource.h"			// リソース
 
-// ウィンドウリストコントロールクラスCWindowListControl
-class CWindowListControl : public CUserControl {
+// ウィンドウリストアイテムズパネルクラスCWindowListItemsPanel
+class CWindowListItemsPanel : public CUserControl {
 
 	// publicメンバ
 	public:
@@ -15,15 +13,14 @@ class CWindowListControl : public CUserControl {
 		// publicメンバ変数
 		HPEN m_hPen;		// ペンHPEN型m_hPen.
 		HBRUSH m_hBrush;	// ブラシHBRUSH型m_hBrush.
-		CWindowListItemsPanel *m_pWindowListItemsPanel;	// CWindowListItemsPanel *型ウィンドウリストアイテムズパネルオブジェクトポインタm_pWindowListItemsPanel
 
 		// publicメンバ関数
 		// staticメンバ関数
 		static BOOL RegisterClass(HINSTANCE hInstance);	// ウィンドウクラス登録関数RegisterClass
 
 		// コンストラクタ・デストラクタ
-		CWindowListControl();	// コンストラクタCWindowListControl()
-		virtual ~CWindowListControl();	// デストラクタ~CWindowListControl()
+		CWindowListItemsPanel();	// コンストラクタCWindowListItemsPanel()
+		virtual ~CWindowListItemsPanel();	// デストラクタ~CWindowListItemsPanel()
 
 		// メンバ関数
 		virtual BOOL Create(LPCTSTR lpctszWindowName, DWORD dwStyle, int x, int y, int iWidth, int iHeight, HWND hWndParent, HMENU hMenu, HINSTANCE hInstance);	// ウィンドウ作成関数Create
