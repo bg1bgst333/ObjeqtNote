@@ -21,6 +21,10 @@ void CMainMenuBar::OnFileOpen() {
 	CMainWindow *pMainWindow = dynamic_cast<CMainWindow *>(CWindow::m_mapWindowMap[m_hWnd]);	// CWindow::m_mapWindowMap[m_hWnd]でpMainWindowを取得.(途中dynamic_castしている.)
 	if (pMainWindow != NULL) {	// キャスト成功.
 
+		// 挿入.
+		HINSTANCE hInstance = (HINSTANCE)GetWindowLong(m_hWnd, GWL_HINSTANCE);	// GetWindowLongでhInstanceを取得.
+		pMainWindow->m_pWindowListControl->Insert(_T("0"), 0, 50, hInstance);	// pMainWindow->m_pWindowListControl->Insertで0番目にウィンドウを挿入.
+
 	}
 
 }

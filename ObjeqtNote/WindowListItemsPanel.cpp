@@ -70,6 +70,7 @@ BOOL CWindowListItemsPanel::Insert(LPCTSTR lpctszWindowName, int iIndex, int iHe
 	// 変数の宣言.
 	int iIdx;	// 値のチェック後のインデックスint型iIdx.
 	CWindowListItem *pItem;	// ウィンドウリストアイテムポインタpItem.
+	int iTotalHeight = 0;	// パネル全体の高さiTotalHeightを0に初期化.
 
 	// インデックスの値で振り分け.
 	if (iIndex < 0) {	// 負の値
@@ -87,6 +88,7 @@ BOOL CWindowListItemsPanel::Insert(LPCTSTR lpctszWindowName, int iIndex, int iHe
 		if (i == iIdx) {
 			pItem = new CWindowListItem();	// 生成.
 			pItem->Create(lpctszWindowName, 0, 25, y, 200, iHeight, m_hWnd, (HMENU)(IDC_WINDOWLISTITEM_ID_START + m_nId), hInstance);	// ウィンドウ生成.
+			iTotalHeight = iTotalHeight + iHeight;	// 挿入するウィンドウの高さを足す.
 			m_lstWindowList.insert(itor, pItem);	// 挿入.
 			m_nId++;
 			itor = m_lstWindowList.begin();
@@ -96,9 +98,11 @@ BOOL CWindowListItemsPanel::Insert(LPCTSTR lpctszWindowName, int iIndex, int iHe
 		}
 		else if (i < iIdx) {
 			y = y + (*itor)->m_iHeight;	// 位置計算.
+			iTotalHeight = y;
 		}
 		else if (i > iIdx) {
 			if (itor != m_lstWindowList.end()) {
+				iTotalHeight = iTotalHeight + (*itor)->m_iHeight;
 				(*itor)->MoveWindow(false, 0, iHeight);	// iHeight分ずらす.
 			}
 			else {
@@ -112,6 +116,9 @@ BOOL CWindowListItemsPanel::Insert(LPCTSTR lpctszWindowName, int iIndex, int iHe
 			break;
 		}
 	}
+
+	//アイテムズパネルの大きさを拡張する.
+	MoveWindow(3, iTotalHeight);	// 高さをiTotalHeightにする.
 
 	// とりあえず成功にしておく.
 	return TRUE;
