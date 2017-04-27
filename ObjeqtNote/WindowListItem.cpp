@@ -31,6 +31,18 @@ BOOL CWindowListItem::Create(LPCTSTR lpctszWindowName, DWORD dwStyle, int x, int
 // ウィンドウ破棄関数Destroy
 void CWindowListItem::Destroy() {
 
+	// アイテムの一斉削除
+	std::map<tstring, CWindow *>::iterator itor = m_mapChildMap.begin();	// イテレータ.
+	while (itor != m_mapChildMap.end()) {
+		if (itor->second != NULL) {
+			itor->second->Destroy();
+			delete itor->second;
+			itor->second = NULL;
+		}
+		itor++;
+	}
+	m_mapChildMap.clear();
+
 	// ペンとブラシの破棄.
 	DeleteObject(m_hBrush);	// ブラシの破棄.
 	DeleteObject(m_hPen);	// ペンの破棄.

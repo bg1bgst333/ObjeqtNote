@@ -13,6 +13,7 @@ class CWindowListItem : public CUserControl {
 		// publicメンバ変数
 		HPEN m_hPen;		// ペンHPEN型m_hPen.
 		HBRUSH m_hBrush;	// ブラシHBRUSH型m_hBrush.
+		std::map<tstring, CWindow *> m_mapChildMap;	// アイテムの子ウィンドウマップm_mapChildMap.
 
 		// publicメンバ関数
 		// staticメンバ関数

@@ -24,12 +24,11 @@ void CMainMenuBar::OnFileNew() {
 		// 1番目のアイテムを取得.
 		CWindowListItem * pItem = pMainWindow->m_pWindowListControl->Get(1);	// pMainWindow->m_pWindowListControl->Getで1番目を取得.
 		if (pItem != NULL) {
-			if (pMainWindow->m_pEditBox == NULL) {
-				// エディットボックスをアイテムの子ウィンドウにする.
-				HINSTANCE hInstance = (HINSTANCE)GetWindowLong(m_hWnd, GWL_HINSTANCE);	// GetWindowLongでhInstanceを取得.
-				pMainWindow->m_pEditBox = new CEditBox();	// エディットボックス作成.
-				pMainWindow->m_pEditBox->Create(_T(""), WS_BORDER, 30, 10, 100, 30, pItem->m_hWnd, (HMENU)IDC_EDITBOX1, hInstance);
-			}
+			// エディットボックスをアイテムの子ウィンドウにする.
+			HINSTANCE hInstance = (HINSTANCE)GetWindowLong(m_hWnd, GWL_HINSTANCE);	// GetWindowLongでhInstanceを取得.
+			CEditBox *pEditBox = new CEditBox();	// エディットボックス作成.
+			pEditBox->Create(_T(""), WS_BORDER, 30, 10, 100, 30, pItem->m_hWnd, (HMENU)IDC_WINDOWLISTITEM_CHILD_ID_START, hInstance);	// Createで生成.
+			pItem->m_mapChildMap.insert(std::make_pair(_T("EditBox"), pEditBox));	// pItem->m_mapChildMap.insertでマップ登録.
 		}
 
 	}
