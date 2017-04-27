@@ -14,6 +14,28 @@ CMainMenuBar::CMainMenuBar(HWND hWnd) : CMenuBar(hWnd){
 
 }
 
+// "新規"選択時の独自ハンドラOnFileNew.
+void CMainMenuBar::OnFileNew() {
+
+	// メインウィンドウオブジェクトの取得
+	CMainWindow *pMainWindow = dynamic_cast<CMainWindow *>(CWindow::m_mapWindowMap[m_hWnd]);	// CWindow::m_mapWindowMap[m_hWnd]でpMainWindowを取得.(途中dynamic_castしている.)
+	if (pMainWindow != NULL) {	// キャスト成功.
+
+		// 1番目のアイテムを取得.
+		CWindowListItem * pItem = pMainWindow->m_pWindowListControl->Get(1);	// pMainWindow->m_pWindowListControl->Getで1番目を取得.
+		if (pItem != NULL) {
+			if (pMainWindow->m_pEditBox == NULL) {
+				// エディットボックスをアイテムの子ウィンドウにする.
+				HINSTANCE hInstance = (HINSTANCE)GetWindowLong(m_hWnd, GWL_HINSTANCE);	// GetWindowLongでhInstanceを取得.
+				pMainWindow->m_pEditBox = new CEditBox();	// エディットボックス作成.
+				pMainWindow->m_pEditBox->Create(_T(""), WS_BORDER, 30, 10, 100, 30, pItem->m_hWnd, (HMENU)IDC_EDITBOX1, hInstance);
+			}
+		}
+
+	}
+
+}
+
 // "開く"選択時の独自ハンドラOnFileOpen.
 void CMainMenuBar::OnFileOpen() {
 

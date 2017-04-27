@@ -28,14 +28,14 @@ CMainWindow::CMainWindow() : CStandardWindow() {
 CMainWindow::~CMainWindow() {
 
 	// メンバの終了処理.
+	if (m_pEditBox != NULL) {	// ウィンドウリストアイテムの子エディットボックスを先に終了処理する.
+		delete m_pEditBox;			// deleteでm_pEditBoxを解放.
+		m_pEditBox = NULL;			// m_pEditBoxをNULLで埋める.
+	}
 	Destroy();	// Destroyで破棄.
 	if (m_pPictureBox != NULL) {
 		delete m_pPictureBox;		// deleteでm_pPictureBoxを解放.
 		m_pPictureBox = NULL;		// m_pPictureBoxをNULLで埋める.
-	}
-	if (m_pEditBox != NULL) {
-		delete m_pEditBox;			// deleteでm_pEditBoxを解放.
-		m_pEditBox = NULL;			// m_pEditBoxをNULLで埋める.
 	}
 	if (m_pUserControl != NULL) {
 		delete m_pUserControl;		// deleteでm_pUserControlを解放.

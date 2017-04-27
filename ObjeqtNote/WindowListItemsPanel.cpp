@@ -190,6 +190,23 @@ BOOL CWindowListItemsPanel::Remove(int iIndex) {
 
 }
 
+// アイテム取得関数Get
+CWindowListItem * CWindowListItemsPanel::Get(int iIndex) {
+
+	// iIndex番目の要素を返す.
+	int i = 0;	// iを0に初期化.
+	std::list<CWindowListItem *>::iterator itor = m_lstWindowList.begin();	// イテレータ.
+	while (itor != m_lstWindowList.end()) {
+		if (i == iIndex) {
+			return (*itor);
+		}
+		i++;
+		itor++;
+	}
+	return NULL;
+
+}
+
 // ウィンドウ作成時のハンドラOnCreate.
 int CWindowListItemsPanel::OnCreate(HWND hwnd, LPCREATESTRUCT lpCreateStruct) {
 

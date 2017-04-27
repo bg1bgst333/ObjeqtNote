@@ -64,11 +64,19 @@ BOOL CWindowListControl::Insert(LPCTSTR lpctszWindowName, int iIndex, int iHeigh
 
 }
 
-// アイテム削除Remove
+// アイテム削除関数Remove
 BOOL CWindowListControl::Remove(int iIndex) {
 
 	// アイテムズパネルのRemoveを呼ぶ.
 	return m_pWindowListItemsPanel->Remove(iIndex);	// m_pWindowListItemsPanel->Removeで削除.
+
+}
+
+// アイテム取得関数Get
+CWindowListItem * CWindowListControl::Get(int iIndex) {
+
+	// iIndex番目を返す.
+	return m_pWindowListItemsPanel->Get(iIndex);	// m_pWindowListItemsPanel->GetでiIndex番目を返す.
 
 }
 
